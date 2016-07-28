@@ -20,7 +20,7 @@ public class BaseEntity implements Serializable {
     /**
      * ID
      */
-    private String id;
+    private String uuid;
     
     /**
      * 创建日期
@@ -36,12 +36,12 @@ public class BaseEntity implements Serializable {
     @Column(length = 32, nullable = true)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
-    public String getId() {
-        return id;
+    public String getUUID() {
+        return uuid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUUID(String uuid) {
+        this.uuid = uuid;
     }
 
     @Column(updatable = false)
@@ -63,7 +63,7 @@ public class BaseEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return id == null ? System.identityHashCode(this) : id.hashCode();
+        return uuid == null ? System.identityHashCode(this) : uuid.hashCode();
     }
 
     @Override
@@ -78,11 +78,11 @@ public class BaseEntity implements Serializable {
             return false;
         }
         final BaseEntity other = (BaseEntity) obj;
-        if (id == null) {
-            if (other.getId() != null) {
+        if (uuid == null) {
+            if (other.getUUID() != null) {
                 return false;
             }
-        } else if (!id.equals(other.getId())) {
+        } else if (!uuid.equals(other.getUUID())) {
             return false;
         }
         return true;

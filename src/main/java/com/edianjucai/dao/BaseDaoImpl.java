@@ -1,35 +1,23 @@
 package com.edianjucai.dao;
 
-import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
-
-import com.edianjucai.dao.impl.IBaseDao;
 
 @Repository
-public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK> {
+public class BaseDaoImpl{
 
-    private Class<T> entityClass;
-    
+    @Autowired
     protected SessionFactory sessionFactory;
-
-    @SuppressWarnings("unchecked")
-    public BaseDaoImpl() {
-        this.entityClass = null;
-        Class<?> c = getClass();
-        Type type = c.getGenericSuperclass();
-        if (type instanceof ParameterizedType) {
-            Type[] parameterizedType = ((ParameterizedType) type).getActualTypeArguments();
-            this.entityClass = (Class<T>) parameterizedType[0];
-        }
-    }
 
     @Resource
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -40,16 +28,33 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK> 
         return sessionFactory.getCurrentSession();
     }
 
-    @SuppressWarnings("unchecked")
-    public T get(PK id) {
-        Assert.notNull(id, "id is required");
-        return (T) getSession().get(entityClass, id);
+    public List<?> getListBySql(String sql, Class<?> clazz, Map<String, org.hibernate.type.Type> scalars,
+            Object... parameters) {
+        SQLQuery query = getSession().createSQLQuery(sql);
+        
+        if (scalars != null) {
+            for (String column : scalars.keySet()) {
+                query.addScalar(column, scalars.get(column));
+            }
+        }
+
+        query.setResultTransformer(Transformers.aliasToBean(clazz));
+        
+        for (int i = 0; parameters != null && i < parameters.length; i++) {
+            query.setParameter(i, parameters[i]);
+        }
+        
+        return query.list();
     }
 
-    @SuppressWarnings("unchecked")
-    public PK save(T entity) {
-        Assert.notNull(entity, "entity is required");
-        return (PK) getSession().save(entity);
+    public List<?> getListByHql(String hql, Object... parameters) {
+        Query query = getSession().createQuery(hql);
+
+        for (int i = 0; parameters != null && i < parameters.length; i++) {
+            query.setParameter(i, parameters[i]);
+        }
+
+        return query.list();
     }
 
 }

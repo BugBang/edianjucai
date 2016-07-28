@@ -1,6 +1,10 @@
 package com.edianjucai.dao.impl;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.hibernate.type.Type;
 
 /**
  * Dao接口 - Dao基接口
@@ -8,21 +12,7 @@ import java.io.Serializable;
 
 public interface IBaseDao<T, PK extends Serializable> {
 
-  /**
-   * 根据ID获取实体对象.
-   * 
-   * @param id
-   *            记录ID
-   * @return 实体对象
-   */
-  public T get(PK id);
+  public List<T> getListBySql(String sql, Class<T> clazz, Map<String, Type> scalars, Object... parameters);
   
-  /**
-   * 保存实体对象.
-   * 
-   * @param entity
-   *            对象
-   * @return ID
-   */
-  public PK save(T entity);
+  public List<T> getListByHql(String hql, Object... parameters);
 }
