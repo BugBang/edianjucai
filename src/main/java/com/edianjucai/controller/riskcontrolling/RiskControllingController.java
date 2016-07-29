@@ -9,6 +9,6 @@ public class RiskControllingController {
     
     @RequestMapping("/test")
     public String Test() {
-        return "/jsp/business/index";
+        return "/riskcontrolling/index";
     }
 }

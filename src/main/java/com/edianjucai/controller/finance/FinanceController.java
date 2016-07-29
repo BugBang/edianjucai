@@ -9,6 +9,6 @@ public class FinanceController {
     
     @RequestMapping("/test")
     public String Test() {
-        return "/jsp/business/index";
+        return "/Finance/index";
     }
 }
