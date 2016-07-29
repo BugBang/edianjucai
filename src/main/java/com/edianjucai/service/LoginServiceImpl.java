@@ -1,6 +1,5 @@
 package com.edianjucai.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +13,30 @@ import com.edianjucai.model.Admin;
 public class LoginServiceImpl{
 
     @Autowired
-    private AdminDao<Admin> adminDao;
+    private AdminDao adminDao;
 
-    public AdminDao<Admin> getAdminDao() {
+    public AdminDao getAdminDao() {
         return adminDao;
     }
     
-    public Admin loign(String name, String password) {
+    @Transactional
+    public List<Admin> showAllAdmin() {
 
-        List<Admin> adminList = adminDao.getAdminByName(name, password);
+        List<Admin> adminList = adminDao.findAllAdmin();
 
-        if (adminList.size() == 1) {
-            return adminList.get(1);
+        return adminList;
+
+    }
+    
+    @Transactional
+    public Admin login(String userName, String password) {
+        
+        List<Admin> admins = adminDao.getAdmin(userName, password);
+
+        if (admins.size() == 1) {
+            return admins.get(0);
         } else {
             return null;
         }
-
     }
 }
