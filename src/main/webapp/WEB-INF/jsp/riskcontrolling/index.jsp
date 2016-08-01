@@ -3,11 +3,11 @@
 <!DOCTYPE>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
 <body>
-    <h1>${admin.name}登陆成功</h1>
+    <h1>${admin.replayName}登陆成功</h1>
     <h2>分控</h2>
 </body>
 </html>

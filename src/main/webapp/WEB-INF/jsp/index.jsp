@@ -8,6 +8,6 @@
 </head>
 <body>
     <h1>${admin.replayName}登陆成功</h1>
-    <h2>财务</h2>
+    <h2>admin</h2>
 </body>
 </html>

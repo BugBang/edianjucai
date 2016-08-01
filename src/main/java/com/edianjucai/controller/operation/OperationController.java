@@ -9,6 +9,6 @@ public class OperationController {
     
     @RequestMapping("/test")
     public String Test() {
-        return "/Operation/index";
+        return "/operation/index";
     }
 }

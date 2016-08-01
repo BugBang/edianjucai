@@ -30,29 +30,28 @@ public class LoginController {
     public ModelAndView login(String userName, String password, HttpSession httpSession) {
         ModelAndView mv = new ModelAndView();
         Admin admin = loginService.login(userName, password);
-        
         if (admin == null) {
             mv.addObject("loginMsg", "用户名密码有误！");
             mv.setViewName("/login");
         } else {
             httpSession.setAttribute("admin", admin);
             int roleId = admin.getRoleId();
+            roleId = loginService.getRoleId(roleId);
             switch (roleId) {
-            case 5:
-                //request.getRequestDispatcher("/Business/test").forward(request, response);
+            case 1:
+            mv.setViewName("redirect:/Admin");
+                break;
+            case 2:
             mv.setViewName("redirect:/Business/test");
                 break;
-            case 24:
-            mv.setViewName("redirect:/Business/test");
-                break;
-            case 23:
+            case 3:
             mv.setViewName("redirect:/RiskControlling/test");
                 break;
-            case 20:
-            mv.setViewName("redirect:/Finance/test");
-                break;
-            case 22:
+            case 4:
             mv.setViewName("redirect:/Operation/test");
+                break;
+            case 5:
+            mv.setViewName("redirect:/Finance/test");
                 break;
             default:
                 break;
@@ -62,12 +61,12 @@ public class LoginController {
         return mv;
     }
     
-    @RequestMapping(value = "/showAllAdmin")
+    @RequestMapping(value = "/Admin")
     public ModelAndView showAllAdmin(HttpSession httpSession) {
         ModelAndView mv = new ModelAndView();
         List<Admin> admins = loginService.showAllAdmin();
         mv.addObject("admins", admins);
-        mv.setViewName("jsp1");
+        mv.setViewName("/index");
         return mv;
     }
 }

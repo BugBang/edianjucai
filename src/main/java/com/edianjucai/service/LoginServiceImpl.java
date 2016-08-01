@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edianjucai.dao.AdminDao;
 import com.edianjucai.model.Admin;
+import com.edianjucai.model.AdminRole;
 
 @Service
 public class LoginServiceImpl{
@@ -38,5 +39,15 @@ public class LoginServiceImpl{
         } else {
             return null;
         }
+    }
+    
+    @Transactional
+    public int getRoleId(int id) {
+        AdminRole adminRole = adminDao.getAdminRole(id);
+        if (adminRole == null) {
+            return -1;
+        }
+        
+        return adminRole.getClassId();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.edianjucai.model.Admin;
+import com.edianjucai.model.AdminRole;
 
 @Repository
 public class AdminDao {
@@ -29,10 +30,14 @@ public class AdminDao {
 
     @SuppressWarnings("unchecked")
     public List<Admin> getAdmin(String userName, String password) {
-        String hql = "from Admin where name = ? and password = ?";
+        String hql = "from Admin where userName = ? and password = ?";
         Query query = getSession().createQuery(hql);
         query.setParameter(0, userName);
         query.setParameter(1, password);
         return query.list();
+    }
+    
+    public AdminRole getAdminRole(int id) {
+        return (AdminRole)getSession().get(AdminRole.class, id);
     }
 }
