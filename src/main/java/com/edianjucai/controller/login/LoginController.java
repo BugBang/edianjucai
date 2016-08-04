@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.edianjucai.model.Admin;
 import com.edianjucai.service.LoginServiceImpl;
+import com.edianjucai.util.MD5Util;
 
 @Controller
 @RequestMapping("/")
@@ -29,7 +30,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(String userName, String password, HttpSession httpSession) {
         ModelAndView mv = new ModelAndView();
-        Admin admin = loginService.login(userName, password);
+        Admin admin = loginService.login(userName, MD5Util.MD5(password));
         if (admin == null) {
             mv.addObject("loginMsg", "用户名密码有误！");
             mv.setViewName("/login");

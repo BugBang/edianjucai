@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id = "user">
+        select 
+	        id, 
+	        idno, 
+	        user_name as userName, 
+	        create_time as createTime, 
+	        mobile, 
+	        ips_acct_no as ipsAcctNo, 
+	        real_name as realName, 
+	        tuiguang as tuiGuang, 
+	        is_effect as isEffect, 
+	        is_black as isBlack 
+        from edian_user
+    </sql>
+    
+</sqls>

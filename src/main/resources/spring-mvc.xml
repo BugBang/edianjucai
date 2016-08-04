@@ -12,13 +12,14 @@
   <context:component-scan base-package="com.edianjucai.controller" />
   <!-- 开启mvc注解 -->
   <mvc:annotation-driven />
-
+  
   <bean id="viewResolver"
     class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/WEB-INF/jsp"></property>
     <property name="suffix" value=".jsp"></property>
   </bean>
   
+  <mvc:resources mapping="/static/**" location="/static_resources/javascript/"/>    
   <mvc:interceptors>  
     <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->  
       <bean class="com.edianjucai.interceptor.LoginInterceptor"/>  
