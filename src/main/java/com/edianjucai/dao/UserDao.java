@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.type.StandardBasicTypes;
@@ -12,8 +12,9 @@ import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.edianjucai.model.Test;
 import com.edianjucai.model.UserVo;
-import com.edianjucai.page.Pagination;
+import com.edianjucai.page.UserPagination;
 import com.edianjucai.util.DaoUtil;
 import com.edianjucai.util.XMLReaderUtil;
 
@@ -29,9 +30,23 @@ public class UserDao {
         return sessionFactory.getCurrentSession();
     }
     
-    public List<UserVo> findAllUser() {
+    public List<UserVo> findAllUser(UserPagination userPagination) {
+        
         String sql = XMLReaderUtil.getSql("user");
-        sql += "limit ?, ?";
+        sql += " where idno like \'%" + (userPagination.getIdno() != null ? userPagination.getIdno() : "")
+        + "%\' and mobile like \'%" + (userPagination.getMobile() != null ? userPagination.getMobile() : "")
+        + "%\' and real_name like \'%" + (userPagination.getRealName() != null ? userPagination.getRealName() : "")
+        + "%\' and user_name like \'%" + (userPagination.getUserName() != null ? userPagination.getUserName() : "")+ "%\'";
+        
+        if (userPagination.getIsEffect() != -1) {
+            sql += " and is_effect = " + userPagination.getIsEffect();
+        }
+        
+        if (userPagination.getVipState() != -1) {
+            sql += " and vip_state = " + userPagination.getVipState();
+        }
+        
+        sql += " limit ?, ?";
         
         Map<String, Type> scalars = new HashMap<String, Type>();
         scalars.put("id", StandardBasicTypes.INTEGER);
@@ -44,12 +59,7 @@ public class UserDao {
         scalars.put("isBlack", StandardBasicTypes.INTEGER);
         scalars.put("createTime", StandardBasicTypes.LONG);
         
-        Pagination pagination = new Pagination();
-        pagination.setTotalCount(userCount());
-        pagination.setPageSize(12);
-        pagination.setCurrentPage(1);
-        
-        List<UserVo> users = DaoUtil.getVoListBySql(getSession(), sql, UserVo.class, scalars, pagination.getStart(), pagination.getPageSize());
+        List<UserVo> users = DaoUtil.getVoListBySql(getSession(), sql, UserVo.class, scalars, userPagination.getStart(), userPagination.getPageSize());
         
         for (UserVo user : users) {
             user.setMoney(dealLoadDao.getSumDealLoadByUserId(user.getId()));
@@ -58,10 +68,24 @@ public class UserDao {
         return users;
     }
     
-    public int userCount() {
-        Query query = getSession().createQuery("select count(*) from User");
+    public int getUserCount(UserPagination userPagination) {
+        String sql = XMLReaderUtil.getSql("userCount");
+        sql += " where idno like \'%" + (userPagination.getIdno() != null ? userPagination.getIdno() : "")
+                + "%\' and mobile like \'%" + (userPagination.getMobile() != null ? userPagination.getMobile() : "")
+                + "%\' and real_name like \'%" + (userPagination.getRealName() != null ? userPagination.getRealName() : "")
+                + "%\' and  user_name like \'%" + (userPagination.getUserName() != null ? userPagination.getUserName() : "") + "%\'";
+                
+                if (userPagination.getIsEffect() != -1) {
+                    sql += " and is_effect = " + userPagination.getIsEffect();
+                }
+                
+                if (userPagination.getVipState() != -1) {
+                    sql += " and vip_state = " + userPagination.getVipState();
+                }
+        SQLQuery query = getSession().createSQLQuery(sql);
         String countStr = query.uniqueResult().toString();
         int count = Integer.valueOf(countStr);
         return count;
     }
+    
 }

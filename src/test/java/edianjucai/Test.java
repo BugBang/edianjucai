@@ -1,15 +1,11 @@
 package edianjucai;
 
-import com.edianjucai.page.Pagination;
+import com.edianjucai.util.ReadFromFile;
 
 public class Test {
 
     public static void main(String[] args) {
-        Pagination pagination = new Pagination();
-        pagination.setCurrentPage(3);
-        pagination.setTotalCount(40);
-        int start = pagination.getStart();
-        System.out.println(pagination.getTotalPage());
+        System.out.println(ReadFromFile.class.getResource("./"));
     }
 
 }

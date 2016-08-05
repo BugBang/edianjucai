@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.edianjucai.util.VerificationUtil;
+
 public class BusinessInterceptor implements HandlerInterceptor{
 
     @Override
@@ -18,7 +20,6 @@ public class BusinessInterceptor implements HandlerInterceptor{
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
             ModelAndView modelAndView) throws Exception {
-        // TODO Auto-generated method stub
         
     }
 

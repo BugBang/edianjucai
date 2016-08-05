@@ -14,5 +14,7 @@
 	        is_black as isBlack 
         from edian_user
     </sql>
-    
+    <sql id = "userCount">
+        select count(1) from edian_user
+    </sql>
 </sqls>

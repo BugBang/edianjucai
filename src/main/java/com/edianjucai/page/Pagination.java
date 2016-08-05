@@ -28,6 +28,9 @@ public class Pagination {
     }
 
     public int getCurrentPage() {
+        if (currentPage > totalPage) {
+            currentPage = totalPage;
+        }
         return currentPage;
     }
 

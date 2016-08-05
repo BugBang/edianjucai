@@ -43,7 +43,7 @@ public class LoginController {
             mv.setViewName("redirect:/Admin");
                 break;
             case 2:
-            mv.setViewName("redirect:/Business/test");
+            mv.setViewName("redirect:/Business/index");
                 break;
             case 3:
             mv.setViewName("redirect:/RiskControlling/test");
