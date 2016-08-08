@@ -17,4 +17,12 @@
     <sql id = "userCount">
         select count(1) from edian_user
     </sql>
+    
+    <hql id = "article">
+        from Article where title like \'%?%\' limit ?, ?
+    </hql>
+    
+    <sql id = "articleCount">
+        select count(1) from edian_article where title like \'%?%\'
+    </sql>
 </sqls>
