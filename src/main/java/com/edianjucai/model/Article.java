@@ -56,6 +56,15 @@ public class Article implements Serializable{
     private String subTitle;
     @Column(name = "brief")
     private String brief;
+    private String contentFileName;
+
+    public String getContentFileName() {
+        return contentFileName;
+    }
+
+    public void setContentFileName(String contentFileName) {
+        this.contentFileName = contentFileName;
+    }
 
     public int getId() {
         return id;

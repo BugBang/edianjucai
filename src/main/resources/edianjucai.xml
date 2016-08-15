@@ -19,10 +19,58 @@
     </sql>
     
     <hql id = "article">
-        from Article where title like \'%?%\' limit ?, ?
+        from Article where title like :title
     </hql>
     
     <sql id = "articleCount">
-        select count(1) from edian_article where title like \'%?%\'
+        select count(1) from edian_article
+    </sql>
+    
+    <hql id = "articleCate">
+        from ArticleCate where title like :title
+    </hql>
+    
+    <sql id = "articleCateCount">
+        select count(1) from edian_article_cate
+    </sql>
+    
+    <hql id = "goods">
+        from Goods where name like :name
+    </hql>
+    
+    <sql id = "goodsCount">
+        select count(1) from edian_goods
+    </sql>
+    
+    <hql id = "goodsCate">
+        from GoodsCate where name like :name
+    </hql>
+    
+    <sql id = "goodsCateCount">
+        select count(1) from edian_goods_cate
+    </sql>
+    
+    <hql id = "goodsOrder">
+        from GoodsOrder
+    </hql>
+    
+    <sql id = "goodsOrderCount">
+        select count(1) from edian_goods_order
+    </sql>
+    
+    <hql id = "nav">
+        from Nav where name like :name
+    </hql>
+    
+    <sql id = "navCount">
+        select count(1) from edian_nav
+    </sql>
+    
+    <hql id = "adv">
+        from Adv where name like :name
+    </hql>
+    
+    <sql id = "advCount">
+        select count(1) from edian_adv
     </sql>
 </sqls>

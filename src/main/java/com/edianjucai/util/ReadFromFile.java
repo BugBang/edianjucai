@@ -2,8 +2,8 @@ package com.edianjucai.util;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class ReadFromFile {
@@ -40,39 +40,33 @@ public class ReadFromFile {
         return result.toString();
     }
 
-    public static void writeFile(String content, String fileName) {
+    public static void writeFile(String content, String fileName, String folderName) {
         path = path.substring(0, path.indexOf("WEB-INF") + ("WEB-INF".length() + 1)) + "Article/";
-        fileName = path + fileName;
-        File file = new File(fileName);
-        FileOutputStream fop = null;
+        String foderPath = path + folderName;
+        File folder = new File(foderPath);
+        if (!folder.exists() && !folder.isDirectory()) {
+            folder.mkdir();
+        }
+        
+        fileName = folder + "/" + fileName;
+        FileWriter fw = null;
         try {
-            fop = new FileOutputStream(file);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
+            fw = new FileWriter(fileName, false);
 
-            // if file doesn't exists, then create it
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            // get the content in bytes
-            byte[] contentInBytes = content.getBytes();
-
-            fop.write(contentInBytes);
+            fw.write(content);
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (fop != null) {
-                    fop.flush();
-                    fop.close();
+                if (fw != null) {
+                    fw.flush();
+                    fw.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-
+    
 }

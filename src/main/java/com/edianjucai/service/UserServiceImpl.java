@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edianjucai.dao.UserDao;
-import com.edianjucai.model.UserVo;
+import com.edianjucai.model.vo.UserVo;
 import com.edianjucai.page.UserPagination;
 import com.edianjucai.util.DateFormatUtils;
 

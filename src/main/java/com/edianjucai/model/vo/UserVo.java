@@ -1,4 +1,4 @@
-package com.edianjucai.model;
+package com.edianjucai.model.vo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

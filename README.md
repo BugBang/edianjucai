@@ -1,5 +1,7 @@
 # edianjucai
 
+# [maven 配置jar](http://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad/3.6)
+
 # 配置环境
 **1** 在10.0.57路径下的tool中
 ## 步骤

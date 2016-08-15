@@ -32,9 +32,9 @@ public class User implements Serializable{
     @Column(name = "content")
     private String content;
     @Column(name = "sort")
-    private int sort;
+    private Integer sort;
     @Column(name = "acct_type")
-    private int acctType;
+    private Integer acctType;
     @Column(name = "user_pwd")
     private String password;
     @Column(name = "create_time")

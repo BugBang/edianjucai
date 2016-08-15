@@ -12,8 +12,8 @@ import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.edianjucai.model.Test;
-import com.edianjucai.model.UserVo;
+import com.edianjucai.model.User;
+import com.edianjucai.model.vo.UserVo;
 import com.edianjucai.page.UserPagination;
 import com.edianjucai.util.DaoUtil;
 import com.edianjucai.util.XMLReaderUtil;
@@ -86,6 +86,10 @@ public class UserDao {
         String countStr = query.uniqueResult().toString();
         int count = Integer.valueOf(countStr);
         return count;
+    }
+    
+    public User getUserById(int id) {
+        return (User) getSession().get(User.class, id);
     }
     
 }
