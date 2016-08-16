@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.edianjucai.model.Adv;
 import com.edianjucai.model.Article;
 import com.edianjucai.model.ArticleCate;
+import com.edianjucai.model.Deal;
+import com.edianjucai.model.DealCate;
 import com.edianjucai.model.Goods;
 import com.edianjucai.model.GoodsCate;
 import com.edianjucai.model.GoodsOrder;
@@ -28,12 +30,14 @@ import com.edianjucai.model.vo.UserVo;
 import com.edianjucai.page.AdvPagination;
 import com.edianjucai.page.ArticleCatePagination;
 import com.edianjucai.page.ArticlePagination;
+import com.edianjucai.page.DealPagination;
 import com.edianjucai.page.GoodsCatePagination;
 import com.edianjucai.page.GoodsOrderPagination;
 import com.edianjucai.page.GoodsPagination;
 import com.edianjucai.page.NavPagination;
 import com.edianjucai.page.UserPagination;
 import com.edianjucai.service.ArticleServiceImpl;
+import com.edianjucai.service.DealServiceImpl;
 import com.edianjucai.service.FrontendServiceImpl;
 import com.edianjucai.service.GoodsServiceImpl;
 import com.edianjucai.service.UserServiceImpl;
@@ -51,6 +55,8 @@ public class BusinessController {
     private GoodsServiceImpl goodsService;
     @Autowired
     private FrontendServiceImpl frontendService;
+    @Autowired
+    private DealServiceImpl dealService;
 
     @RequestMapping(value = "/index")
     public ModelAndView showUserList(HttpServletRequest request, HttpServletResponse response) {
@@ -531,5 +537,15 @@ public class BusinessController {
         return model;
     }
     
+    @RequestMapping(value = "/showAllDeal")
+    public ModelAndView showAllDeal(DealPagination dealPagination) {
+        ModelAndView model = new ModelAndView();
+        List<Deal> deals = dealService.findAllDeal(dealPagination);
+        List<DealCate> dealCates = dealService.findAllDealCate();
+        model.addObject("deals", deals);
+        model.addObject("dealCates", dealCates);
+        model.setViewName("/business/deal/list");
+        return model;
+    }
 
 }

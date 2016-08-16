@@ -4,9 +4,10 @@ public class DealPagination extends Pagination {
 
     private String name;
     private String userName;
-    private int cateId;
-    private int loantype;
-    private int dealStatus;
+    private Integer userId;
+    private Integer cateId;
+    private Integer loantype;
+    private Integer dealStatus;
 
     public String getName() {
         return name;
@@ -24,27 +25,35 @@ public class DealPagination extends Pagination {
         this.userName = userName;
     }
 
-    public int getCateId() {
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getCateId() {
         return cateId;
     }
 
-    public void setCateId(int cateId) {
+    public void setCateId(Integer cateId) {
         this.cateId = cateId;
     }
 
-    public int getLoantype() {
+    public Integer getLoantype() {
         return loantype;
     }
 
-    public void setLoantype(int loantype) {
+    public void setLoantype(Integer loantype) {
         this.loantype = loantype;
     }
 
-    public int getDealStatus() {
+    public Integer getDealStatus() {
         return dealStatus;
     }
 
-    public void setDealStatus(int dealStatus) {
+    public void setDealStatus(Integer dealStatus) {
         this.dealStatus = dealStatus;
     }
 

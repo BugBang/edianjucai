@@ -2,7 +2,6 @@ package com.edianjucai.model.vo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class UserVo implements Serializable{
 

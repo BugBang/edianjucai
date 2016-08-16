@@ -73,4 +73,20 @@
     <sql id = "advCount">
         select count(1) from edian_adv
     </sql>
+    
+    <hql id = "deal">
+        from Deal where name like :name and userId like :userId and loantype like :loantype and cateId like :cateId and dealStatus like :dealStatus
+    </hql>
+    
+    <sql id = "dealCount">
+        select count(1) from edian_deal
+    </sql>
+    
+    <hql id = "getUserIdByName">
+        select id from edian_user
+    </hql>
+    
+    <hql id = "findAllDealCate">
+        from DealCate
+    </hql>
 </sqls>

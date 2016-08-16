@@ -92,4 +92,21 @@ public class UserDao {
         return (User) getSession().get(User.class, id);
     }
     
+    public Integer getUserIdByName(String userName) {
+        if (userName == null) {
+            return null;
+        }
+        String sql = XMLReaderUtil.getSql("getUserIdByName");
+        sql += " where user_name=" + userName;
+        Map<String, Type> scalars = new HashMap<String, Type>();
+        scalars.put("id", StandardBasicTypes.INTEGER);
+        List<UserVo> users = DaoUtil.getVoListBySql(getSession(), sql, UserVo.class, scalars, userName);
+        if (users.isEmpty()) {
+            int id = users.get(0).getId();
+            return id;
+        } else {
+            return null;
+        }
+    }
+    
 }

@@ -1,5 +1,6 @@
 package com.edianjucai.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -10,8 +11,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "edian_deal_load")
-public class DealLoad {
+public class DealLoad implements Serializable {
 
+    private static final long serialVersionUID = -4883608111900044950L;
     @Id
     private int id;
     @Column(name = "deal_id")
