@@ -1,6 +1,7 @@
 package com.edianjucai.util;
 
 import java.security.MessageDigest;
+import java.util.UUID;
 
 public class MD5Util {
 
@@ -30,6 +31,26 @@ public class MD5Util {
             hexValue.append(Integer.toHexString(val));
         }
         return hexValue.toString();
+
+    }
+    
+    //生成10位不重复的序列号
+    public static String MD5Bit12(String inStr) {
+        return MD5(inStr).substring(4, 24);
+    }
+    
+    //生成8位数字密码
+    public static String[] chars = new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+    public static String generatePassword() {
+        StringBuffer shortBuffer = new StringBuffer();
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        for (int i = 0; i < 8; i++) {
+            String str = uuid.substring(i * 4, i * 4 + 4);
+            int x = Integer.parseInt(str, 16);
+            shortBuffer.append(chars[x % 0x0a]);
+        }
+        return shortBuffer.toString();
 
     }
 }

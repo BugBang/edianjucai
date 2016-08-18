@@ -28,7 +28,7 @@ public class Pagination {
     }
 
     public int getCurrentPage() {
-        if (currentPage > totalPage) {
+        if (currentPage > getTotalPage()) {
             currentPage = totalPage;
         }
         return currentPage;

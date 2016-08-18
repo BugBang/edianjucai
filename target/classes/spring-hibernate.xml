@@ -62,6 +62,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         <prop key="hibernate.dialect">${hibernate.dialect}</prop>
         <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
         <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+        <prop key="hibernate.cache.use_second_level_cache"> false</prop>
       </props>
     </property>
 

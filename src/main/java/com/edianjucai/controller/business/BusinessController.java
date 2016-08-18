@@ -21,20 +21,28 @@ import com.edianjucai.model.Article;
 import com.edianjucai.model.ArticleCate;
 import com.edianjucai.model.Deal;
 import com.edianjucai.model.DealCate;
+import com.edianjucai.model.Ecv;
+import com.edianjucai.model.EcvType;
 import com.edianjucai.model.Goods;
 import com.edianjucai.model.GoodsCate;
 import com.edianjucai.model.GoodsOrder;
+import com.edianjucai.model.MsgSystem;
 import com.edianjucai.model.Nav;
 import com.edianjucai.model.vo.GoodsOrderVo;
+import com.edianjucai.model.vo.UserBankVo;
 import com.edianjucai.model.vo.UserVo;
 import com.edianjucai.page.AdvPagination;
 import com.edianjucai.page.ArticleCatePagination;
 import com.edianjucai.page.ArticlePagination;
 import com.edianjucai.page.DealPagination;
+import com.edianjucai.page.EcvPagination;
+import com.edianjucai.page.EcvTypePagination;
 import com.edianjucai.page.GoodsCatePagination;
 import com.edianjucai.page.GoodsOrderPagination;
 import com.edianjucai.page.GoodsPagination;
+import com.edianjucai.page.MsgSystemPagination;
 import com.edianjucai.page.NavPagination;
+import com.edianjucai.page.UserBankPagination;
 import com.edianjucai.page.UserPagination;
 import com.edianjucai.service.ArticleServiceImpl;
 import com.edianjucai.service.DealServiceImpl;
@@ -59,12 +67,7 @@ public class BusinessController {
     private DealServiceImpl dealService;
 
     @RequestMapping(value = "/index")
-    public ModelAndView showUserList(HttpServletRequest request, HttpServletResponse response) {
-        UserPagination userPagination = new UserPagination();
-        // test
-        userPagination.setCurrentPage(2);
-        userPagination.setIsEffect(-1);
-        userPagination.setVipState(-1);
+    public ModelAndView showUserList(UserPagination userPagination) {
         /*
          * if (VerificationUtil.isNumeric(request.getParameter("currentPage")))
          * { userPagination.setCurrentPage(Integer.valueOf(request.getParameter(
@@ -80,9 +83,14 @@ public class BusinessController {
          * "vipState")));
          */
         ModelAndView model = new ModelAndView();
-        List<UserVo> users = userService.findAllUser(userPagination);
-        model.addObject("users", users);
-        model.setViewName("/business/index");
+        try {
+            List<UserVo> users = userService.findAllUser(userPagination);
+            model.addObject("users", users);
+            model.addObject("pagination", userPagination);
+            model.setViewName("/business/user/list");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return model;
     }
 
@@ -509,7 +517,7 @@ public class BusinessController {
             session.setAttribute("msg", "modify success!");
             model.addObject("name", "");
             model.addObject("currentPage", 1);
-            model.setViewName("/redirect:/Business/showAllAdv");
+            model.setViewName("redirect:/Business/showAllAdv");
         } else {
             model.addObject("msg", "modify fail");
             model.setViewName("/business/frontend/adv/modify");
@@ -529,7 +537,7 @@ public class BusinessController {
             session.setAttribute("msg", "Add success");
             model.addObject("name", "");
             model.addObject("currentPage", 1);
-            model.setViewName("/redirect:/Business/showAllAdv");
+            model.setViewName("redirect:/Business/showAllAdv");
         } else {
             model.addObject("addMsg", "Add fail");
             model.setViewName("/business/frontend/adv/create");
@@ -547,5 +555,160 @@ public class BusinessController {
         model.setViewName("/business/deal/list");
         return model;
     }
+    
+    //userbank
+    
+    @RequestMapping(value = "/showAllUserBank")
+    public ModelAndView showAllUserBank(UserBankPagination userBankPagination) {
+        ModelAndView model = new ModelAndView();
+        List<UserBankVo> userBanks = userService.findAllUserBank(userBankPagination);
+        model.addObject("userBanks", userBanks);
+        model.setViewName("/business/user/bank/list");
+        return model;
+    }
+    //使用ajax请求 接受json对象
+    /*@RequestMapping(value = "/deleteUserBank")
+    public ModelAndView deleteUserBank(List<Integer> ids) {
+        ModelAndView model = new ModelAndView();
+        if (userService.deleteUserBankById(ids)) {
+            
+        }
+    }*/
 
+    // ecv 
+    
+    @RequestMapping(value = "/showAllEcvType")
+    public ModelAndView showAllEcvType(EcvTypePagination ecvTypePagination) {
+        ModelAndView model = new ModelAndView();
+        List<EcvType> ecvTypes = userService.findAllEcvType(ecvTypePagination);
+        model.addObject("ecvTypes", ecvTypes);
+        model.setViewName("/business/user/ecv/typeList");
+        return model;
+    }
+    
+    @RequestMapping(value = "/goToModifyEcvType")
+    public ModelAndView goToModifyEcvType(@RequestParam(value = "id", defaultValue = "-1") int id) {
+        ModelAndView model = new ModelAndView();
+        EcvType ecvType = userService.getEcvTypeById(id);
+        if (ecvType != null) {
+            model.addObject("ecvType", ecvType);
+            model.setViewName("/business/user/ecv/typeModify");
+        } else {
+            model.addObject("msg", "not have the ecv type");
+            model.setViewName("/business/user/ecv/typeList");
+        }
+        return model;
+    }
+    
+    @RequestMapping(value = "/modifyEcvType")
+    public ModelAndView modifyEcvType(EcvType ecvType, HttpSession session) {
+        ModelAndView model = new ModelAndView();
+        if (userService.modifyEcvType(ecvType)) {
+            session.setAttribute("msg", "modify success");
+            model.setViewName("redirect:/Business/showAllEcvType");
+        } else {
+            model.addObject("msg", "add fail");
+            model.setViewName("/business/user/ecv/typeModify");
+        }
+        return model;
+    }
+    
+    @RequestMapping(value = "/goToAddEcvType")
+    public String goToAddEcvType() {
+        return "/business/user/ecv/typeCreate";
+    }
+    
+    @RequestMapping(value = "/addEcvType")
+    public ModelAndView addEcvType(EcvType ecvType, HttpSession session) {
+        ModelAndView model = new ModelAndView();
+        if (userService.addEcvType(ecvType)) {
+            session.setAttribute("msg", "add success");
+            model.setViewName("redirect:/Business/showAllEcvType");
+        } else {
+            model.addObject("msg", "add fail");
+            model.setViewName("/business/user/ecv/typeCreate");
+        }
+        return model;
+    }
+    
+    @RequestMapping(value = "/grantEcv")
+    public ModelAndView grantEcv(
+            @RequestParam(value = "ecvTypeId", defaultValue = "-1") int ecvTypeId,
+            @RequestParam(value = "ids", defaultValue = "") String ids,
+            @RequestParam(value = "grantType", defaultValue = "0") int grantType,
+            @RequestParam(value = "isCreatePassword", defaultValue = "false") boolean isCreatePassword,
+            HttpSession session) {
+        ModelAndView model = new ModelAndView();
+        if (userService.createEcv(ecvTypeId, ids, grantType, isCreatePassword)) {
+            session.setAttribute("msg", "send success");
+            model.setViewName("redirect:/Business/showAllEcvType");
+        } else {
+            model.addObject("msg", "send fail");
+            model.setViewName("/business/user/ecv/typeList");
+        }
+        return model;
+    }
+    
+    @RequestMapping(value = "/showAllEcv")
+    public ModelAndView showAllEcv(EcvPagination ecvPagination) {
+        ModelAndView model = new ModelAndView();
+        List<Ecv> ecvs = userService.findAllEcv(ecvPagination);
+        model.addObject("ecvs", ecvs);
+        model.setViewName("/business/user/ecv/list");
+        return model;
+    }
+    
+    @RequestMapping(value = "/showAllMsgSystem")
+    public ModelAndView showAllMsgSystem(MsgSystemPagination msgSystemPagination) {
+        ModelAndView model = new ModelAndView();
+        List<MsgSystem> msgSystems = userService.findAllMsgSystem(msgSystemPagination);
+        model.addObject("msgSystems", msgSystems);
+        model.setViewName("/business/user/msg/systemList");
+        return model;
+    }
+    
+    @RequestMapping(value = "/goToModifyMsgSystem")
+    public ModelAndView goToModifyMsgSystem(@RequestParam(value = "id", defaultValue = "-1") int id) {
+        ModelAndView model = new ModelAndView();
+        MsgSystem msgSystem = userService.getMsgSystemById(id);
+        if (msgSystem != null) {
+            model.addObject("msgSystem", msgSystem);
+            model.setViewName("/business/user/msg/systemModify");
+        } else {
+            model.addObject("msg", "not have the msgSystem");
+            model.setViewName("/business/user/msg/systemList");
+        }
+        return model;
+    }
+    
+    @RequestMapping(value = "/modifyMsgSystem")
+    public ModelAndView modifyMsgSystem(MsgSystem msgSystem, HttpSession session) {
+        ModelAndView model = new ModelAndView();
+        if (userService.modifyMsgSystem(msgSystem)) {
+            session.setAttribute("msg", "modify success");
+            model.setViewName("redirect:/Business/showAllMsgSystem");
+        } else {
+            model.addObject("msg", "modify fail");
+            model.setViewName("/business/user/msg/systemModify");
+        }
+        return model;
+    }
+    
+    @RequestMapping(value = "/goToAddMsgSystem")
+    public String goToAddMsgSystem() {
+        return "/business/user/msg/systemCreate";
+    }
+    
+    @RequestMapping(value = "/addMsgSystem")
+    public ModelAndView addMsgSystem(MsgSystem msgSystem, HttpSession session) {
+        ModelAndView model = new ModelAndView();
+        if (userService.addMsgSystem(msgSystem)) {
+            session.setAttribute("msg", "add success");
+            model.setViewName("redirect:/Business/showAllMsgSystem");
+        } else {
+            model.addObject("addMsg", "add fial");
+            model.setViewName("/busines/user/msg/systemCreate");
+        }
+        return model;
+    }
 }

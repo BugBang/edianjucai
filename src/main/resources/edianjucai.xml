@@ -89,4 +89,40 @@
     <hql id = "findAllDealCate">
         from DealCate
     </hql>
+    
+    <hql id = "findAllUserBank">
+        from UserBank
+    </hql>
+    
+    <sql id = "getUserBankCount">
+        select count(1) from edian_user_bank
+    </sql>
+    
+    <hql id = "findAllEctType">
+        from EcvType where name like :name
+    </hql>
+    
+    <sql id = "getEcvTypeCount">
+        select count(1) from edian_ecv_type
+    </sql>
+    
+    <sql id = "findAllIdToUser">
+        select id from edian_user
+    </sql>
+    
+    <hql id = "findAllEcv">
+        from Ecv
+    </hql>
+    
+    <sql id = "getEcvCount">
+        select count(1) from edian_ecv
+    </sql>
+    
+    <hql id = "findAllMsgSystem">
+        from MsgSystem where title like :title
+    </hql>
+    
+    <sql id = "getMsgSystemCount">
+        select count(1) from edian_msg_system
+    </sql>
 </sqls>
