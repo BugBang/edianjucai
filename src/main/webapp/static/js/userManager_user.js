@@ -33,20 +33,36 @@ $(document).ready(function(){
 		    return;
 		}
 	})
+	
 })
 
 function showDetail(){
 	$("#dai_detail").toggle();
 }
 
-function tiaozhuan(){
-	var str = $("#page").val();  
+function tiaozhuan(url){
+	var str = $("#page").val();
+	var totalPage = $(".page_all span").text();
+	
+	if (str <= 1) {
+		str = 1;
+	}
+	
+	if (str >= totalPage) {
+		str = totalPage;
+	}
+	
 	if((/^(\+|-)?\d+$/.test(str)) && str > 0)	{
+		location.href = url + "?currentPage=" + str + "&userName=" + $("#userName").val() + "&realName=" + $("#realName").val() + "&mobile=" + $("#mobile").val() + "&refName=" + $("#refName").val() + "&beginTime=" + $("#beginTime").val() + "&endTime=" + $("#endTime").val();
 		return true;
 	} else {
 		alert('请输入正确的数字');
 		return false;
 	}
+}
+
+function goToAddUser(url) {
+	window.location.href = url + "/Business/goToAddUser"
 }
 
 

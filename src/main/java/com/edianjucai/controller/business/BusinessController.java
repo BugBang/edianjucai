@@ -28,6 +28,7 @@ import com.edianjucai.model.GoodsCate;
 import com.edianjucai.model.GoodsOrder;
 import com.edianjucai.model.MsgSystem;
 import com.edianjucai.model.Nav;
+import com.edianjucai.model.User;
 import com.edianjucai.model.vo.GoodsOrderVo;
 import com.edianjucai.model.vo.UserBankVo;
 import com.edianjucai.model.vo.UserVo;
@@ -68,20 +69,6 @@ public class BusinessController {
 
     @RequestMapping(value = "/index")
     public ModelAndView showUserList(UserPagination userPagination) {
-        /*
-         * if (VerificationUtil.isNumeric(request.getParameter("currentPage")))
-         * { userPagination.setCurrentPage(Integer.valueOf(request.getParameter(
-         * "currentPage"))); }
-         * 
-         * userPagination.setIdno(request.getParameter("idNo"));
-         * userPagination.setMobile(request.getParameter("mobile"));
-         * userPagination.setRealName(request.getParameter("realName"));
-         * userPagination.setUserName(request.getParameter("userName"));
-         * userPagination.setIsEffect(Integer.valueOf(request.getParameter(
-         * "isEffect")));
-         * userPagination.setVipState(Integer.valueOf(request.getParameter(
-         * "vipState")));
-         */
         ModelAndView model = new ModelAndView();
         try {
             List<UserVo> users = userService.findAllUser(userPagination);
@@ -96,16 +83,11 @@ public class BusinessController {
 
     @RequestMapping(value = "/goToAddUser")
     public String goToAddUser() {
-        return "/business/adduser";
+        return "/business/user/create";
     }
 
     @RequestMapping(value = "/addUser")
-    public ModelAndView addUser(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
-            @RequestParam(value = "idNo", defaultValue = "") String idNo,
-            @RequestParam(value = "realName", defaultValue = "") String realName,
-            @RequestParam(value = "userName", defaultValue = "") String userName,
-            @RequestParam(value = "isEffect", defaultValue = "-1") int isEffect,
-            @RequestParam(value = "vipState", defaultValue = "-1") int vipState) {
+    public ModelAndView addUser(User user, HttpSession session) {
         ModelAndView model = new ModelAndView();
         return model;
     }
