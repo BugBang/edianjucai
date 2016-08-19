@@ -91,6 +91,14 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         return model;
     }
+    
+    @RequestMapping(value = "/goToModifyUser")
+    public ModelAndView goToModifyUser(@RequestParam(value = "id", defaultValue = "-1") int id) {
+        ModelAndView model = new ModelAndView();
+        model.addObject("test", id);
+        model.setViewName("/business/user/modify");
+        return model;
+    }
 
     @RequestMapping(value = "/deleteUser")
     public ModelAndView deleteUser(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,

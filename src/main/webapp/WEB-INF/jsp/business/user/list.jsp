@@ -10,7 +10,7 @@
     <script src="../static/js/jquery-ui.js"></script>
     <script type="text/javascript" src="../static/js/userManager_user.js"></script>
 </head>
-<% String url = request.getContextPath() + "/Business/index"; %>
+<% String url = request.getContextPath(); %>
 <body>
     <div class="sheet">
         <div class="head">  
@@ -82,7 +82,7 @@
                 </ul>
             </div>
             <div class="list_top">
-                <form action="<%=request.getContextPath()%>/Business/index" method="get">
+                <form action="<%=url%>/Business/index" method="get">
                 <div class="list_top1">
                     <input type="text" placeholder="请输入会员名称" value="${pagination.userName }" id="userName" name="userName" class="list_input1">
                     <input type="text" placeholder="请输入真实姓名" value="${pagination.realName }" id="realName" name="realName" class="list_input1">
@@ -128,7 +128,7 @@
                         <td>${user.createDateStr }</td>
                         <td>无</td>
                         <td align="center" class="td_r">
-                            <a href="#" class="shenhe">操作</a>&nbsp;&nbsp;
+                            <a href="<%=url%>/Business/goToModifyUser?id=${user.id}" class="shenhe">操作</a>&nbsp;&nbsp;
                             <span class="del">删除</span>
                         </td>
                     </tr>
@@ -136,24 +136,24 @@
                 </table>
             </div>
             <div class="list_bottom">
-                <a href="<%=url%>?currentPage=1&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_1"></a>
+                <a href="<%=url%>/Business/index?currentPage=1&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_1"></a>
                 <c:if test="${pagination.currentPage <= 1 }">
-                    <a href="<%=url%>?currentPage=1&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_2"></a>
+                    <a href="<%=url%>/Business/index?currentPage=1&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_2"></a>
                 </c:if>
                 <c:if test="${pagination.currentPage > 1 }">
-                    <a href="<%=url%>?currentPage=${(pagination.currentPage - 1)}&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_2"></a>
+                    <a href="<%=url%>/Business/index?currentPage=${(pagination.currentPage - 1)}&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_2"></a>
                 </c:if>
                 <div class="page_1">第<input type="text" value="${pagination.currentPage }" class="page_inp page_inp1">页</div>
                 <c:if test="${pagination.currentPage >= pagination.totalPage}">
-                    <a href="<%=url%>?currentPage=${(pagination.totalPage)}&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_3"></a>
+                    <a href="<%=url%>/Business/index?currentPage=${(pagination.totalPage)}&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_3"></a>
                 </c:if>
                 <c:if test="${pagination.currentPage < pagination.totalPage}">
-                    <a href="<%=url%>?currentPage=${(pagination.currentPage + 1)}&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_3"></a>
+                    <a href="<%=url%>/Business/index?currentPage=${(pagination.currentPage + 1)}&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_3"></a>
                 </c:if>
-                <a href="<%=url%>?currentPage=${pagination.totalPage }&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_4"></a>
+                <a href="<%=url%>/Business/index?currentPage=${pagination.totalPage }&userName=${pagination.userName }&realName=${pagination.realName }&mobile=${pagination.mobile }&refName=${pagination.refName }&beginTime=${pagination.beginTime }&endTime=${pagination.endTime }" class="a_0 a_4"></a>
                 <div class="page_all">共<span>${pagination.totalPage }</span>页</div>
                 <div class="page_fo">到<input type="text" value="${pagination.currentPage }" class="page_f" id="page">页</div>
-                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan('<%=url%>')"/>
+                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan('<%=url%>/Business/index')"/>
             </div>
         </div>
         <div class="bottom"></div>
