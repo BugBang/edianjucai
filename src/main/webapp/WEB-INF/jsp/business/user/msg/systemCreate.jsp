@@ -25,6 +25,30 @@
     <link rel="stylesheet" href="../static/js/jquery-ui.css">
     <script type="text/javascript" src="../static/js/jquery-1.12.2.min.js"></script>
     <script src="../static/js/jquery-ui.js"></script>
+
+    <script src="js/jquery-ui.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $(".input_drop").click(function(){
+                $(this).next().next().show();
+                showMask();
+            }); 
+
+            $(".drop li").click(function(){
+                var str = $(this).html();
+                $('.drop').hide();
+                $(this).parents().siblings().val(str);
+                $("#mask").hide();  
+            });
+        })
+
+        function showMask(){
+            $("#mask").css("width",$(document).width());
+            $("#mask").css("height",$(document).height());
+            $("#mask").show();  
+        }
+
+    </script>
 </head>
 <% String url = request.getContextPath(); %>
 <body>
@@ -110,8 +134,13 @@
                         <td>
                             <div class="box box1">
                                 有效期结束时间 :
-                                <input type="text" name="text2" dir="rtl" class="input input4">
+                                <input type="text" name="text2" dir="rtl" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>养老保险</li>
+                                    <li>医疗保险</li>
+                                    <li>失业保险</li>
+                                </ul>
                             </div>
                         </td>
                         <td class="input_r">
@@ -141,5 +170,6 @@
         </div>
         <div class="bottom"></div>
     </div>
+    <div class="mask" id="mask"></div>
 </body>
 </html>

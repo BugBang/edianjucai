@@ -27,14 +27,26 @@
     <script src="../static/js/jquery-ui.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
+        $(".datepicker" ).datepicker();
+        $(".input_drop").click(function(){
+            $(this).next().next().show();
+            showMask();
+        }); 
 
-        // var numArr = []; // 定义一个空数组
-  //       var txt = $('#input_all').find(':text'); // 获取所有文本框
-  //       for (var i = 0; i < txt.length; i++) {
-  //           numArr.push(txt.eq(i).val()); // 将文本框的值添加到数组中
-
-  //       }   
+        $(".drop li").click(function(){
+            var str = $(this).html();
+            $('.drop').hide();
+            $(this).parents().siblings().val(str);
+            $("#mask").hide();  
+        });   
     })
+
+
+    function showMask(){
+        $("#mask").css("width",$(document).width());
+        $("#mask").css("height",$(document).height());
+        $("#mask").show();  
+    }
     
 
 
@@ -114,84 +126,113 @@
                 <table id="input_all">
                     <tr>
                         <td>
-                            <div class="box box1">会员类型 :
-                                <input type="text" name="add_1" dir="rtl" placeholder="请输入" class="input input4" id="lop">
-                                <button class="xiala"></button>
+                            <div class="box box1" id="box1">
+                                会员类型 :
+                                <input type="text" name="add_1" dir="rtl" placeholder="请输入" class="input input4 input_drop" id="lop" readonly="readonly">
+                                <button class="xiala" onclick="showDetail()"></button>
+                                <ul class="drop_1 drop">
+                                    <li>养老保险</li>
+                                    <li>医疗保险</li>
+                                    <li>失业保险</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">会员名称 :
+                            <div class="box box1">
+                                会员名称 :
                                 <input type="text" name="add_2" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">会员邮件 :
-                                <input type="text" name="add_3" placeholder="请输入" dir="rtl" class="input input1" value="121212">
+                            <div class="box box1">
+                                会员邮件 :
+                                <input type="text" name="add_3" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">手机号 :
+                            <div class="box box1">
+                                手机号 :
                                 <input type="text" name="add_4" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>   
                     </tr>
                     <tr>
                         <td>
-                            <div class="box box1">会员密码 :
+                            <div class="box box1">
+                                会员密码 :
                                 <input type="text" name="add_5" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">会员密码 :
+                            <div class="box box1">
+                                会员密码 :
                                 <input type="text" name="add_6" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>   
                     </tr>
                     <tr>
-                        <td colspan="2" class="input_title">身份信息
+                        <td colspan="2" class="input_title">
+                            身份信息
                         </td>
-                        <td colspan="2" class="input_title">学历信息
+                        <td colspan="2" class="input_title">
+                            学历信息
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="box box1">真实姓名 :
+                            <div class="box box1">
+                                真实姓名 :
                                 <input type="text" name="add_7" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">身份证号 :
+                            <div class="box box1">
+                                身份证号 :
                                 <input type="text" name="add_8" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">最高学历 :
-                                <input type="text" name="add_9" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                最高学历 :
+                                <input type="text" name="add_9" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>养老保险</li>
+                                    <li>医疗保险</li>
+                                    <li>失业保险</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">入学年份 :
-                                <input type="text" name="add_10" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                入学年份 :
+                                <input type="text" name="add_10" dir="rtl" placeholder="请输入" class="input input4 datepicker">
                                 <button class="xiala"></button>
                             </div>
                         </td>   
                     </tr>
                     <tr>
                         <td>
-                            <div class="box box1">出生日期 :
-                                <input type="text" name="add_11" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                出生日期 :
+                                <input type="text" name="add_11" dir="rtl" placeholder="请输入" class="input input4 datepicker">
                                 <button class="xiala"></button>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">性别 :
-                                <input type="text" name="add_12" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                性别 :
+                                <input type="text" name="add_12" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>男</li>
+                                    <li>女</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">毕业院校 :
+                            <div class="box box1">
+                                毕业院校 :
                                 <input type="text" name="add_13" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>
@@ -203,102 +244,162 @@
                         </td>       
                     </tr>
                     <tr>
-                        <td colspan="2" class="input_title">婚姻状况
+                        <td colspan="2" class="input_title">
+                            婚姻状况
                         </td>
-                        <td colspan="2" class="input_title">其他信息
+                        <td colspan="2" class="input_title">
+                            其他信息
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="box box2">婚姻状况 :
-                                <input type="text" name="add_15" placeholder="请输入" dir="rtl" class="input input2">
+                            <div class="box box2">
+                                婚姻状况 :
+                                <input type="text" name="add_15" placeholder="请输入" dir="rtl" class="input input2 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_2 drop">
+                                    <li>养老保险</li>
+                                    <li>医疗保险</li>
+                                    <li>失业保险</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">有无子女 :
-                                <input type="text" name="add_16" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                有无子女 :
+                                <input type="text" name="add_16" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>有</li>
+                                    <li>无</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">籍贯 :
-                                <input type="text" name="add_17" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                籍贯 :
+                                <input type="text" name="add_17" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>养老保险</li>
+                                    <li>医疗保险</li>
+                                    <li>失业保险</li>
+                                </ul>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" class="input_title">房产信息
+                        <td colspan="2" class="input_title">
+                            房产信息
                         </td>
                         <td>
-                            <div class="box box1">户口所在地 :
-                                <input type="text" name="add_18" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                户口所在地 :
+                                <input type="text" name="add_18" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>养老保险</li>
+                                    <li>医疗保险</li>
+                                    <li>失业保险</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">支付宝号 :
+                            <div class="box box1">
+                                支付宝号 :
                                 <input type="text" name="add_19" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>   
                     </tr>
                     <tr>
                         <td>
-                            <div class="box box1">有无房产 :
-                                <input type="text" name="add_20" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                有无房产 :
+                                <input type="text" name="add_20" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>有</li>
+                                    <li>无</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">有无房贷 :
-                                <input type="text" name="add_21" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                有无房贷 :
+                                <input type="text" name="add_21" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>有</li>
+                                    <li>无</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">学校 :
+                            <div class="box box1">
+                                学校 :
                                 <input type="text" name="add_22" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">专业 :
+                            <div class="box box1">
+                                专业 :
                                 <input type="text" name="add_23" placeholder="请输入" dir="rtl" class="input input1">
                             </div>
                         </td>   
                     </tr>
                     <tr>
-                        <td colspan="2" class="input_title">购车信息
+                        <td colspan="2" class="input_title">
+                            购车信息
                         </td>
                         <td colspan="2">
-                            <div class="box box2">居住地址 :
+                            <div class="box box2">
+                                居住地址 :
                                 <input type="text" name="add_24" placeholder="请输入" dir="rtl" class="input input22">
                             </div>
                         </td>   
                     </tr>
                     <tr>
                         <td>
-                            <div class="box box1">是否有车 :
-                                <input type="text" name="add_25" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                是否有车 :
+                                <input type="text" name="add_25" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>有</li>
+                                    <li>无</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">有无车贷 :
-                                <input type="text" name="add_26" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                有无车贷 :
+                                <input type="text" name="add_26" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>有</li>
+                                    <li>无</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
-                            <div class="box box1">状态 :
-                                <input type="text" name="add_27" dir="rtl" placeholder="请输入" class="input input4">
+                            <div class="box box1">
+                                状态 :
+                                <input type="text" name="add_27" dir="rtl" placeholder="请输入" class="input input4 input_drop" readonly="readonly">
                                 <button class="xiala"></button>
+                                <ul class="drop_1 drop">
+                                    <li>有</li>
+                                    <li>无</li>
+                                </ul>
                             </div>
                         </td>
                         <td>
                             <div class="box box1">
                                 EMS :
-                                <input type="text" name="add_28" placeholder="请输入" dir="rtl" class="input input1">
+                                <input type="text" name="add_28" placeholder="请输入" dir="rtl" class="input input1 input_drop" readonly="readonly">
+                                <ul class="drop_1 drop">
+                                    <li>有</li>
+                                    <li>无</li>
+                                </ul>
                             </div>
                         </td>   
                     </tr>
