@@ -655,6 +655,7 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         List<MsgSystem> msgSystems = userService.findAllMsgSystem(msgSystemPagination);
         model.addObject("msgSystems", msgSystems);
+        model.addObject("pagination", msgSystemPagination);
         model.setViewName("/business/user/msg/systemList");
         return model;
     }

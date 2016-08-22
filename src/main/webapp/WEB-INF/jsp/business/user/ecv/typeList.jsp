@@ -154,7 +154,7 @@
                 <a href="<%=url%>/Business/showAllEcvType?currentPage=${pagination.totalPage }" class="a_0 a_4"></a>
                 <div class="page_all">共<span>${pagination.totalPage }</span>页</div>
                 <div class="page_fo">到<input type="text" value="${pagination.currentPage }" class="page_f" id="page">页</div>
-                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan('<%=url%>/Business/index')"/>
+                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan('<%=url%>/Business/showAllEcvType')"/>
             </div>
         </div>
         </div>

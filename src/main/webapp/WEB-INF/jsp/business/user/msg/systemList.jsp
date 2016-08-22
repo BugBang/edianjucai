@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="../static/js/jquery-ui.css">
     <script type="text/javascript" src="../static/js/jquery-1.12.2.min.js"></script>
     <script src="../static/js/jquery-ui.js"></script>
-    <script type="text/javascript" src="../static/js/userManager_ZNist.js"></script>
+    <script type="text/javascript" src="../static/js/userManager_list.js"></script>
 </head>
 <% String url = request.getContextPath(); %>
 <body>
@@ -96,13 +96,13 @@
                 <ul class="sign_title">
                     <li><a href="<%=url%>/Business/index">会员管理</a></li>
                     <li><a href="<%=url%>/Business/showAllUserBank">银行卡管理</a></li>
-                    <li id="title_bg"><a href="<%=url%>/Business/showAllEcvType">红包管理</a></li>
-                    <li style="border-right: none;"><a href="<%=url%>/Business/showAllMsgSystem">站内消息管理</a></li>
+                    <li><a href="<%=url%>/Business/showAllEcvType">红包管理</a></li>
+                    <li id="title_bg" style="border-right: none;"><a href="<%=url%>/Business/showAllMsgSystem">站内消息管理</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>
             <div class="list_top">
-                <button class="btn btn1">新增</button>
+                <button class="btn btn1" onclick="goToAddMsgSystem('<%=url%>')">新增</button>
                 <button class="btn btn2">删除</button>
             </div>
             <div class="list_con">
@@ -120,7 +120,8 @@
 	                        <td id="td_1"><input type="checkbox" name="subBox" class="check1"></td>
 	                        <td>${msgSystem.id }</td>
 	                        <td>${msgSystem.title }</td>
-	                        
+	                        <td><c:if test="${createTime * 1000 > 0 }"><date:date value="${createTime * 1000 }" /></c:if></td>
+	                        <td><c:if test="${endTime * 1000 > 0 }"><date:date value="${endTime * 1000 }"></date:date></c:if></td>
 	                        <td class="td_r">
 	                            <a href="#">操作</a>
 	                        </td>
@@ -129,14 +130,24 @@
                 </table>
             </div>
             <div class="list_bottom">
-                <a href="#" class="a_0 a_1"></a>
-                <a href="#" class="a_0 a_2"></a>
-                <div class="page_1">第<input type="text" value="4" class="page_inp page_inp1">页</div>
-                <a href="#" class="a_0 a_3"></a>
-                <a href="#" class="a_0 a_4"></a>
-                <div class="page_all">共<span>20</span>页</div>
-                <div class="page_fo">到<input type="text" value="" class="page_f" id="page">页</div>
-                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan()">
+                <a href="<%=url%>/Business/showAllMsgSystem?currentPage=1" class="a_0 a_1"></a>
+                <c:if test="${pagination.currentPage <= 1 }">
+                    <a href="<%=url%>/Business/showAllMsgSystem?currentPage=1" class="a_0 a_2"></a>
+                </c:if>
+                <c:if test="${pagination.currentPage > 1 }">
+                    <a href="<%=url%>/Business/showAllMsgSystem?currentPage=${(pagination.currentPage - 1)}" class="a_0 a_2"></a>
+                </c:if>
+                <div class="page_1">第<input type="text" value="${pagination.currentPage }" class="page_inp page_inp1">页</div>
+                <c:if test="${pagination.currentPage >= pagination.totalPage}">
+                    <a href="<%=url%>/Business/showAllMsgSystem?currentPage=${(pagination.totalPage)}" class="a_0 a_3"></a>
+                </c:if>
+                <c:if test="${pagination.currentPage < pagination.totalPage}">
+                    <a href="<%=url%>/Business/showAllMsgSystem?currentPage=${(pagination.currentPage + 1)}" class="a_0 a_3"></a>
+                </c:if>
+                <a href="<%=url%>/Business/showAllMsgSystem?currentPage=${pagination.totalPage }" class="a_0 a_4"></a>
+                <div class="page_all">共<span>${pagination.totalPage }</span>页</div>
+                <div class="page_fo">到<input type="text" value="${pagination.currentPage }" class="page_f" id="page">页</div>
+                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan('<%=url%>/Business/showAllMsgSystem')"/>
             </div>
         </div>
         <div class="bottom"></div>
