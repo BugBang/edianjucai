@@ -66,7 +66,7 @@
                     </a>
                 </li>
                 <li class="bg">
-                    <a href="userManager_user.html">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>

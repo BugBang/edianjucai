@@ -6,7 +6,7 @@
 	        idno, 
 	        user_name as userName, 
 	        create_time as createTime, 
-	        mobile, 
+	        mobile as mobile, 
 	        ips_acct_no as ipsAcctNo, 
 	        real_name as realName, 
 	        tuiguang as tuiGuang, 

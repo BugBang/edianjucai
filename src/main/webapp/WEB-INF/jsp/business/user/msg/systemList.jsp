@@ -2,24 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="/tags" prefix="date"%>
-<%-- <!DOCTYPE>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
-</head>
-<body>
-    <h1>${admin.replayName}</h1>
-    <h2>show msgSystem</h2>
-    <h3>${msg }</h3>
-    <c:forEach var="msgSystem" items="${msgSystems}" varStatus="count">  
-         <tr>  
-            <td>${msgSystem.id }</td>
-            <td>${msgSystem.title }</td>
-        </tr>  
-    </c:forEach>  
-</body>
-</html> --%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +47,7 @@
                     </a>
                 </li>
                 <li class="bg">
-                    <a href="userManager_user.html">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
@@ -120,10 +102,10 @@
 	                        <td id="td_1"><input type="checkbox" name="subBox" class="check1"></td>
 	                        <td>${msgSystem.id }</td>
 	                        <td>${msgSystem.title }</td>
-	                        <td><c:if test="${createTime * 1000 > 0 }"><date:date value="${createTime * 1000 }" /></c:if></td>
-	                        <td><c:if test="${endTime * 1000 > 0 }"><date:date value="${endTime * 1000 }"></date:date></c:if></td>
+	                        <td><c:if test="${msgSystem.createTime * 1000 > 0 }"><date:date value="${msgSystem.createTime * 1000 }" /></c:if></td>
+	                        <td><c:if test="${msgSystem.endTime * 1000 > 0 }"><date:date value="${msgSystem.endTime * 1000 }"></date:date></c:if></td>
 	                        <td class="td_r">
-	                            <a href="#">操作</a>
+	                            <a href="goToModifyMsgSystem?id=${msgSystem.id }">操作</a>
 	                        </td>
 	                    </tr>
                     </c:forEach>

@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li class="bg">
-                    <a href="userManager_user.html">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
@@ -77,7 +77,7 @@
                     <li id="title_bg"><a href="<%=url%>/Business/index">会员管理</a></li>
                     <li><a href="<%=url%>/Business/showAllUserBank">银行卡管理</a></li>
                     <li><a href="<%=url%>/Business/showAllEcvType">红包管理</a></li>
-                    <li style="border-right: none;"><a href="#">站内消息管理</a></li>
+                    <li style="border-right: none;"><a href="<%=url%>/Business/showAllMsgSystem">站内消息管理</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>
@@ -90,8 +90,8 @@
                     <input type="text" placeholder="请输入推荐人" value="${pagination.refName }" id="refName" name="refName" class="list_input1">   
                 </div>
                 <div class="list_top2">
-                        <input type="text" value = "${pagination. beginTime}" id="beginTime" name = "beginTime" placeholder="开始时间" id="datepicker" class="begin_time"> <span>&nbsp;--&nbsp;</span>
-                        <input type="text" value = "${pagination.endTime }" id="endTime" name = "endTime" placeholder="结束时间" id="datepicker1" class="end_time">
+                        <input type="text" value = "${pagination.beginTime}" name = "beginTime" placeholder="开始时间" id="datepicker" class="begin_time"> <span>&nbsp;--&nbsp;</span>
+                        <input type="text" value = "${pagination.endTime }" name = "endTime" placeholder="结束时间" id="datepicker1" class="end_time">
                     </div>
                 <div class="btn_g">
                     <input class="btn btn1" value="查询" type = "submit">

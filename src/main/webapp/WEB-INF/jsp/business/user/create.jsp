@@ -40,6 +40,7 @@
 
     </script>
 </head>
+<% String url = request.getContextPath(); %>
 <body>
     <div class="sheet">
         <div class="head">  
@@ -74,7 +75,7 @@
                     </a>
                 </li>
                 <li class="bg">
-                    <a href="userManager_user.html">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
@@ -103,10 +104,10 @@
             <div class="arrow"></div>
             <div class="sign_all">
                 <ul class="sign_title">
-                    <li id="title_bg"><a href="userManager_userAdd.html">会员管理</a></li>
-                    <li><a href="#">银行卡管理</a></li>
-                    <li><a href="#">红包管理</a></li>
-                    <li style="border-right: none;"><a href="#">站内消息管理</a></li>
+                    <li id="title_bg"><a href="<%=url%>/Business/index">会员管理</a></li>
+                    <li><a href="<%=url%>/Business/showAllUserBank">银行卡管理</a></li>
+                    <li><a href="<%=url%>/Business/showAllEcvType">红包管理</a></li>
+                    <li style="border-right: none;"><a href="<%=url%>/Business/showAllMsgSystem">站内消息管理</a></li>
                     <div class="clear"></div>
                 </ul>
                 <div class="table_top">新增会员信息</div>
