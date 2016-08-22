@@ -553,6 +553,7 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         List<UserBankVo> userBanks = userService.findAllUserBank(userBankPagination);
         model.addObject("userBanks", userBanks);
+        model.addObject("pagination", userBankPagination);
         model.setViewName("/business/user/bank/list");
         return model;
     }
@@ -572,6 +573,7 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         List<EcvType> ecvTypes = userService.findAllEcvType(ecvTypePagination);
         model.addObject("ecvTypes", ecvTypes);
+        model.addObject("pagination", ecvTypePagination);
         model.setViewName("/business/user/ecv/typeList");
         return model;
     }

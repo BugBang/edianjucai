@@ -86,16 +86,20 @@
         select id from edian_user
     </hql>
     
+    <hql id = "getUserIdsByName">
+        from User where userName like :userName
+    </hql>
+    
     <hql id = "findAllDealCate">
         from DealCate
     </hql>
     
     <hql id = "findAllUserBank">
-        from UserBank
+        from UserBank where userId IN (:userIds)
     </hql>
     
     <sql id = "getUserBankCount">
-        select count(1) from edian_user_bank
+        select count(*) from UserBank where userId IN (:userIds)
     </sql>
     
     <hql id = "findAllEctType">

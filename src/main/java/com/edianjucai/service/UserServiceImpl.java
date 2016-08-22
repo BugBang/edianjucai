@@ -50,7 +50,12 @@ public class UserServiceImpl {
     
     @Transactional
     public List<UserBankVo> findAllUserBank(UserBankPagination userBankPagination) {
-        userBankPagination.setUserId(userDao.getUserIdByName(userBankPagination.getUserName()));
+        List<User> users = userDao.getUserIdsByName(userBankPagination.getUserName());
+        List<Integer> ids = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            ids.add(users.get(i).getId());
+        }
+        userBankPagination.setUserIds(ids);
         userBankPagination.setTotalCount(userDao.getUserBankCount(userBankPagination));
         List<UserBankVo> vos = new ArrayList<>();
         List<UserBank> pos = userDao.findAllUserBank(userBankPagination);

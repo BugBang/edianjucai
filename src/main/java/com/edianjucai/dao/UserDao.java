@@ -116,37 +116,55 @@ public class UserDao {
             return null;
         }
         String sql = XMLReaderUtil.getSql("getUserIdByName");
-        sql += " where user_name=" + userName;
+        sql += " where user_name=?";
         Map<String, Type> scalars = new HashMap<String, Type>();
         scalars.put("id", StandardBasicTypes.INTEGER);
         List<UserVo> users = DaoUtil.getVoListBySql(getSession(), sql, UserVo.class, scalars, userName);
-        if (users.isEmpty()) {
+        if (users.isEmpty() || users.size() > 0) {
             int id = users.get(0).getId();
             return id;
         } else {
             return null;
         }
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<User> getUserIdsByName(String userName) {
+        String hql = XMLReaderUtil.getSql("getUserIdsByName");
+        Query query = getSession().createQuery(hql);
+        query.setString("userName", "%" + (userName != null ? userName : "") + "%");
+        return query.list();
+    }
 
     @SuppressWarnings("unchecked")
     public List<UserBank> findAllUserBank(UserBankPagination userBankPagination) {
         String hql = XMLReaderUtil.getSql("findAllUserBank");
         Query query = getSession().createQuery(hql);
-        if (userBankPagination.getUserId() != null) {
-            hql += " where userId = :userId";
-            query.setString("userId", String.valueOf(userBankPagination.getUserId()));
-        }
-        query.setFirstResult(userBankPagination.getStart());
-        query.setMaxResults(userBankPagination.getPageSize());
+        query.setParameterList("userIds", userBankPagination.getUserIds());
         return query.list();
+       /* if (userBankPagination.getUserId() != null) {
+            hql += " where userId = :userId";
+            Query query = getSession().createQuery(hql);
+            query.setString("userId", String.valueOf(userBankPagination.getUserId()));
+            query.setFirstResult(userBankPagination.getStart());
+            query.setMaxResults(userBankPagination.getPageSize());
+            return query.list();
+
+        } else {
+            if (userBankPagination.getUserName() == null) {
+                Query query = getSession().createQuery(hql);
+                query.setFirstResult(userBankPagination.getStart());
+                query.setMaxResults(userBankPagination.getPageSize());
+                return query.list();
+            }
+            return query.list();
+        }*/
     }
 
     public int getUserBankCount(UserBankPagination userBankPagination) {
-        String sql = XMLReaderUtil.getSql("getUserBankCount");
-        if (userBankPagination.getUserId() != null) {
-            sql += " where user_id = " + userBankPagination.getUserId();
-        }
-        SQLQuery query = getSession().createSQLQuery(sql);
+        String hql = XMLReaderUtil.getSql("getUserBankCount");
+        Query query = getSession().createQuery(hql);
+        query.setParameterList("userIds", userBankPagination.getUserIds());
         String countStr = query.uniqueResult().toString();
         int count = Integer.valueOf(countStr);
         return count;

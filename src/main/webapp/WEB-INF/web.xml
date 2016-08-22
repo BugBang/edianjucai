@@ -61,6 +61,13 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  
+  <jsp-config >
+      <taglib >       
+             <taglib-uri> /tags</taglib-uri >  
+             <taglib-location> /WEB-INF/lib/jstl/datetag.tld</taglib-location >           
+      </taglib >  
+  </jsp-config >
 
   <welcome-file-list>
     <welcome-file>/WEB-INF/jsp/login.jsp</welcome-file>

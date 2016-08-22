@@ -1,16 +1,18 @@
 package com.edianjucai.page;
 
+import java.util.List;
+
 public class UserBankPagination extends Pagination {
 
     private String userName;
-    private Integer userId;
+    private List<Integer> userIds;
 
-    public Integer getUserId() {
-        return userId;
+    public List<Integer> getUserIds() {
+        return userIds;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserIds(List<Integer> userIds) {
+        this.userIds = userIds;
     }
 
     public String getUserName() {

@@ -49,4 +49,8 @@ function tiaozhuan(){
 	}
 }
 
+function goToAddEcvType(url) {
+	window.location.href = url + "/Business/goToAddEcvType"
+}
+
 

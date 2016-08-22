@@ -74,9 +74,9 @@
             <div class="arrow"></div>
             <div class="sign_all">
                 <ul class="sign_title">
-                    <li id="title_bg"><a href="02_3.html">会员管理</a></li>
-                    <li><a href="#">银行卡管理</a></li>
-                    <li><a href="#">红包管理</a></li>
+                    <li id="title_bg"><a href="<%=url%>/Business/index">会员管理</a></li>
+                    <li><a href="<%=url%>/Business/showAllUserBank">银行卡管理</a></li>
+                    <li><a href="<%=url%>/Business/showAllEcvType">红包管理</a></li>
                     <li style="border-right: none;"><a href="#">站内消息管理</a></li>
                     <div class="clear"></div>
                 </ul>
