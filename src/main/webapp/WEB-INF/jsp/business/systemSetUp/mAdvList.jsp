@@ -8,11 +8,11 @@
 </head>
 <body>
     <h1>${admin.replayName}</h1>
-    <h2>show goods Cate</h2>
-    <c:forEach var="goodsCate" items="${goodsCates}" varStatus="count">  
+    <h2>show MAdvs</h2>
+    <c:forEach var="mAdv" items="${mAdvs}" varStatus="count">  
          <tr>  
-            <td>${goodsCate.id }</td>
-            <td>${goodsCate.name }</td>
+            <td>${mAdv.id }</td>
+            <td>${mAdv.name }</td>
         </tr>  
     </c:forEach>  
 </body>
