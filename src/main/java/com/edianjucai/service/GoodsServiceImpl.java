@@ -14,7 +14,9 @@ import com.edianjucai.dao.UserDao;
 import com.edianjucai.model.Goods;
 import com.edianjucai.model.GoodsCate;
 import com.edianjucai.model.GoodsOrder;
+import com.edianjucai.model.GoodsType;
 import com.edianjucai.model.vo.GoodsOrderVo;
+import com.edianjucai.model.vo.GoodsVo;
 import com.edianjucai.page.GoodsCatePagination;
 import com.edianjucai.page.GoodsOrderPagination;
 import com.edianjucai.page.GoodsPagination;
@@ -29,17 +31,21 @@ public class GoodsServiceImpl {
     private UserDao userDao;
 
     @Transactional
-    public List<Goods> findAllGoods(GoodsPagination goodsPagination) {
+    public List<GoodsVo> findAllGoods(GoodsPagination goodsPagination) {
         goodsPagination.setTotalCount(goodsDao.getGoodsCount(goodsPagination));
         List<Goods> goods = goodsDao.findAllGoods(goodsPagination);
-        return goods;
+        List<GoodsVo> goodsVos = new ArrayList<>();
+        for (Goods good : goods) {
+            goodsVos.add(poToVo(good));
+        }
+        return goodsVos;
     }
 
     @Transactional
-    public Goods getGoodsById(int id) {
+    public GoodsVo getGoodsById(int id) {
         Goods goods = goodsDao.getGoodsById(id);
         if (goods != null) {
-            return goods;
+            return poToVo(goods);
         } else {
             return null;
         }
@@ -70,6 +76,11 @@ public class GoodsServiceImpl {
         goodsCatePagination.setTotalCount(goodsDao.getGoodsCateCount(goodsCatePagination));
         List<GoodsCate> goodsCates = goodsDao.findAllGoodsCate(goodsCatePagination);
         return goodsCates;
+    }
+    
+    @Transactional
+    public List<GoodsCate> findAllGoodsCate() {
+        return goodsDao.findAllGoodsCate();
     }
 
     @Transactional
@@ -143,6 +154,59 @@ public class GoodsServiceImpl {
     }
 
     @Transactional
+    private GoodsVo poToVo(Goods gopo) {
+        GoodsVo govo = new GoodsVo();
+        govo.setId(gopo.getId());
+        govo.setName(gopo.getName());
+        govo.setSubName(gopo.getSubName());
+        govo.setCateid(gopo.getCateId());
+        govo.setCateName(goodsDao.getGoodsCateById(gopo.getCateId()).getName());
+        govo.setImg(gopo.getImg());
+        govo.setBrief(gopo.getBrief());
+        govo.setDescription(gopo.getDescription());
+        govo.setSort(gopo.getSort());
+        govo.setMaxBought(gopo.getMaxBought());
+        if (gopo.getIsDelivery() == 0) {
+            govo.setIsDelivery("否");
+        }
+        
+        if (gopo.getIsDelivery() == 1) {
+            govo.setIsDelivery("是");
+        }
+        
+        if (gopo.getIsHot() == 1) {
+            govo.setIsHot("热卖");
+        } else {
+            govo.setIsHot("");
+        }
+        
+        if (gopo.getIsNew() == 1) {
+            govo.setIsNew("新品");
+        } else {
+            govo.setIsNew("");
+        }
+        
+        govo.setScore(gopo.getScore());
+        
+        if (gopo.getIsRecommend() == 1) {
+            govo.setIsRecommend("推荐");
+        } else {
+            govo.setIsRecommend("");
+        }
+        
+        govo.setSeoDescription(gopo.getSeoDescription());
+        govo.setSeoTitle(gopo.getSeoTitle());
+        govo.setSeoKeyword(gopo.getSeoKeyword());
+        govo.setGoodsTypeId(gopo.getGoodsTypeId());
+        govo.setGoodsTypeName(goodsDao.getGoodsTypeById(gopo.getGoodsTypeId()) != null ? goodsDao.getGoodsTypeById(gopo.getGoodsTypeId()).getName() : "");
+        govo.setInventedNumber(gopo.getInventedNumber());
+        govo.setBuyNumber(gopo.getBuyNumber());
+        govo.setMoney(gopo.getMoney());
+        govo.setUrl(gopo.getUrl());
+
+        return govo;
+    }
+    @Transactional
     private GoodsOrderVo poToVo(GoodsOrder gopo) {
         GoodsOrderVo govo = new GoodsOrderVo();
         govo.setId(gopo.getId());
@@ -184,7 +248,7 @@ public class GoodsServiceImpl {
         govo.setDeliveryAddr(gopo.getDeliveryAddr());
         govo.setDeliveryTel(gopo.getDeliveryTel());
         govo.setDeliveryName(gopo.getDeliveryName());
-
+        
         if (gopo.getIsDelivery() == 1) {
             govo.setIsDelivery("是");
         } else {
@@ -197,5 +261,12 @@ public class GoodsServiceImpl {
         govo.setMemo(gopo.getMemo());
 
         return govo;
+    }
+    
+    //goods type
+    
+    @Transactional
+    public List<GoodsType> findAllGoodsType() {
+        return goodsDao.findAllGoodsType();
     }
 }

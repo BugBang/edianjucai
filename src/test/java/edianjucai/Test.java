@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.edianjucai.util.DateFormatUtils;
+import com.edianjucai.util.FileUtil;
 
 public class Test {
 
@@ -37,12 +38,15 @@ public class Test {
     }*/
 
     public static void main(String[] args) throws ParseException {
-        String str = "06/15/2016";
+        /*String str = "06/15/2016";
         Date date = new Date();
         date.setTime(1356285180 * 1000);
         System.out.println(DateFormatUtils.dateToString(date));
         System.out.println(date.getTime() / 1000);
-        System.out.println(DateFormatUtils.StringToDate(str, "MM/dd/yyyy").getTime() / 1000);
+        System.out.println(DateFormatUtils.StringToDate(str, "MM/dd/yyyy").getTime() / 1000);*/
+        String oldPath = "D:\\document\\项目\\会员管理\\css\\img\\01.png";
+        String newPath = "D:\\document\\项目\\积分商城\\test\\jesse.png";
+        FileUtil.Copy(oldPath, newPath);
     }
 
 }

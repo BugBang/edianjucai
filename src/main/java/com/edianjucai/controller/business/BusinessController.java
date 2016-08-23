@@ -2,7 +2,9 @@ package com.edianjucai.controller.business;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.edianjucai.model.Adv;
@@ -26,11 +29,13 @@ import com.edianjucai.model.EcvType;
 import com.edianjucai.model.Goods;
 import com.edianjucai.model.GoodsCate;
 import com.edianjucai.model.GoodsOrder;
+import com.edianjucai.model.GoodsType;
 import com.edianjucai.model.MAdv;
 import com.edianjucai.model.MsgSystem;
 import com.edianjucai.model.Nav;
 import com.edianjucai.model.User;
 import com.edianjucai.model.vo.GoodsOrderVo;
+import com.edianjucai.model.vo.GoodsVo;
 import com.edianjucai.model.vo.UserBankVo;
 import com.edianjucai.model.vo.UserVo;
 import com.edianjucai.page.AdvPagination;
@@ -264,7 +269,7 @@ public class BusinessController {
     @RequestMapping(value = "/showAllGoods")
     public ModelAndView showAllGoods(@ModelAttribute("goodsPagination") GoodsPagination goodsPagination) {
         ModelAndView model = new ModelAndView();
-        List<Goods> goods = goodsService.findAllGoods(goodsPagination);
+        List<GoodsVo> goods = goodsService.findAllGoods(goodsPagination);
         model.addObject("goods", goods);
         model.addObject("pagination", goodsPagination);
         model.setViewName("/business/goods/list");
@@ -294,8 +299,12 @@ public class BusinessController {
     @RequestMapping(value = "/goToModifyGoods")
     public ModelAndView goToModefyGoods(@RequestParam(value = "id", defaultValue = "-1") int id) {
         ModelAndView model = new ModelAndView();
-        Goods good = goodsService.getGoodsById(id);
+        GoodsVo good = goodsService.getGoodsById(id);
         if (good != null) {
+            List<GoodsCate> goodsCates = goodsService.findAllGoodsCate();
+            List<GoodsType> goodsTypes = goodsService.findAllGoodsType();
+            model.addObject("goodsCates", goodsCates);
+            model.addObject("goodsTypes", goodsTypes);
             model.addObject("good", good);
             model.setViewName("/business/goods/modify");
         } else {
@@ -304,6 +313,22 @@ public class BusinessController {
             model.setViewName("redirect:/Business/showAllGoods");
         }
         return model;
+    }
+    
+    @RequestMapping(value = "/setImage")
+    @ResponseBody
+    public Map<String, String> setImage(String imgUrl, String imgName) {
+        System.out.println("========进来了====================================================================================");
+        Map<String, String> map = new HashMap<String, String>(1); 
+        
+        map.put("success", "true");
+        return map;
+    }
+    
+    @RequestMapping(value = "/modifyGoods")
+    public ModelAndView modifyGoods(Goods goods) {
+        
+        return null;
     }
 
     @RequestMapping(value = "/showAllGoodsCate")

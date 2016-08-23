@@ -27,6 +27,7 @@
     <script src="../static/js/jquery-ui.js"></script>
     <script type="text/javascript" src="../static/js/jifen_splist.js"></script>
 </head>
+<%String url = request.getContextPath(); %>
 <body>
     <div class="sheet">
         <div class="head">  
@@ -111,17 +112,19 @@
                         <th>购买所需积分</th>
                         <th></th>
                     </tr>
+                    <c:forEach var="good" items="${goods}" varStatus="count">
                     <tr>
-                        <td id="td_1"><input type="checkbox" name="subBox" class="check1">007</td>
-                        <td>300.00</td>
-                        <td>2016-06-01</td>
-                        <td>管理员发放</td>
-                        <td>007</td>
-                        <td>300.00</td>
+                        <td id="td_1"><input type="checkbox" name="subBox" class="check1">${good.id}</td>
+                        <td>${good.name}</td>
+                        <td>${good.subName}</td>
+                        <td>${good.cateName}</td>
+                        <td>${good.maxBought}</td>
+                        <td>${good.score}</td>
                         <td class="td_r">
-                            <a href="#">操作</a>
+                            <a href="<%=url%>/Business/goToModifyGoods?id=${good.id}">操作</a>
                         </td>
                     </tr>
+                    </c:forEach>
                 </table>
             </div>
             <div class="list_bottom">

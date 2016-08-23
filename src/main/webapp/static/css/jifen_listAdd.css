@@ -353,7 +353,7 @@ textarea{
 }
 
 .xiala{
-	background: url('img1/03_02.png') center no-repeat;
+	background: url('../img/img1/03_02.png') center no-repeat;
 	width: 10px;
 	height: 6px;
 	position: absolute;
@@ -391,7 +391,7 @@ textarea{
 }
 
 .qingkong{
-	background: url('img1/03_03.png') center no-repeat;
+	background: url('../img/img1/03_03.png') center no-repeat;
 	width: 52px;
 	height: 38px;
 	border: none;

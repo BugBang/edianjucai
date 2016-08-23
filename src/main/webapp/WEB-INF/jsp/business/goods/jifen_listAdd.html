@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/jifen_listAdd.css">
+	<link rel="stylesheet" href="js/jquery-ui.css">
+ 	<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+ 	<script src="js/jquery-ui.js"></script>
+
+	<script type="text/javascript" src="js/text/ueditor.config.js"></script>
+    <script type="text/javascript" src="js/text/ueditor.all.min.js"> </script>
+    <script type="text/javascript" src="js/text/lang/zh-cn/zh-cn.js"></script>
+
+ 	<script type="text/javascript">
+	$(function() {
+		var ue = UE.getEditor('editor');
+
+      	$(".select_file").change(function(event) {
+      		var obj = $(this);
+        	var files = event.target.files, file;        
+        	if (files && files.length > 0) {
+          		file = files[0];
+          		if(file.size > 1024 * 1024 * 3) {
+	               	alert('图片大小不能超过 3MB!');
+	                return false;
+              	}
+             	var URL = window.URL || window.webkitURL;
+              	var imgURL = URL.createObjectURL(file);
+              	obj.parent().parent().next().attr('src', imgURL);
+        	}
+      	});
+
+      	$(".input_drop").click(function(){
+				$(this).next().next().show();
+				showMask();
+			});	
+
+			$(".drop li").click(function(){
+				var str = $(this).html();
+				$('.drop').hide();
+				$(this).parents().siblings().val(str);
+				$("#mask").hide();	
+			});	
+    });
+
+    function showMask(){
+			$("#mask").css("width",$(document).width());
+			$("#mask").css("height",$(document).height());
+			$("#mask").show();	
+		}
+
+ 	</script>
+</head>
+<body>
+	<div class="sheet">
+		<div class="head">  
+			<div class="title">
+				<img src="css/img1/logo.png" class="logo">
+				<div class="title_r">
+					<ul>
+						<li class="li_1"></li>
+						<li class="li_2"></li>
+						<li class="li_3">
+							<div>
+								<img src="css/img1/head.png" class="head_img">
+								<div class="head_1">
+									<div class="head_2 aa">张开泰</div>
+									<div class="head_3 aa">风控部</div>
+								</div>
+								<img src="css/img1/edit.png" class="edit" id="edit">
+								<div class="clear"></div>
+							<div>
+						</li>
+						<div class="clear"></div>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="nav">
+			<ul>
+				<li>
+					<a href="#">
+						<img src="css/img1/icon1.png">
+						<div>贷款管理</div>
+					</a>
+				</li>
+				<li>
+					<a href="userManager_user.html">
+						<img src="css/img1/icon2.png">
+						<div>会员管理</div>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="css/img1/icon3.png">
+						<div>积分商城</div>
+					</a>
+				</li>
+				<li >
+					<a href="#">
+						<img src="css/img1/icon4.png">
+						<div>前端管理</div>
+					</a>
+				</li>
+				<li class="bg">
+					<a href="#">
+						<img src="css/img1/icon5.png">
+						<div>系统设置</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="list">
+			<div class="arrow"></div>
+			<div class="sign_all">
+				<ul class="sign_title">
+					<li><a href="#">商品列表</a></li>
+					<li><a href="#">商品分类</a></li>
+					<li style="border-right: none;"  id="title_bg"><a href="#">兑换商品</a></li>
+					<div class="clear"></div>
+				</ul>
+				<div class="table_top">新增商品</div>
+				<div>
+					<div class="table_1">
+						<table>
+							<tr>
+								<td colspan="2" class="input_title">
+								商品基本信息
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="box box2">
+										商品名称 :
+										<input type="text" name="te3" placeholder="必填" dir="rtl" class="input input2">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="box box1">
+										简短名称 :
+										<input type="text" name="te7" placeholder="请输入" dir="rtl" class="input input3">
+									</div>
+								</td>
+								<td>
+									<div class="td_ri">用于邮件，短信的显示，字数不得超过20个字</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="box5">
+										<div class="box_title">商品简介:</div>
+										<textarea placeholder="请输入"></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="box box1">
+										分类 :
+										<input type="text" name="te8" dir="rtl" placeholder="必填" class="input input4 input_drop" readonly="readonly">
+										<button class="xiala" onclick="hk_style()"></button>
+										<ul class="drop_1 drop">
+											<li>养老保险</li>
+											<li>医疗保险</li>
+											<li>失业保险</li>
+										</ul>
+									</div>
+								</td>
+								<td>
+									<div class="box box1">
+										购买所需积分 :
+										<input type="text" name="te12" placeholder="必填" dir="rtl" class="input input5">
+										<span class="input_ri">分</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="box box1">
+										虚拟购买数 :
+										<input type="text" name="te7" placeholder="请输入" dir="rtl" class="input input3">
+									</div>
+								</td>
+								<td>
+									<div class="box box1">
+										市场价格 :
+										<input type="text" name="te12" placeholder="必填" dir="rtl" class="input input5">
+										<span class="input_ri">分</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="box box2">
+										商品购买地址 :
+										<input type="text" name="te3" placeholder="必填" dir="rtl" class="input input2">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="box box1">
+										库存数 :
+										<input type="text" name="te7" placeholder="请输入" dir="rtl" class="input input3">
+									</div>
+								</td>
+								<td>
+									<div class="box box1">
+										会员最大购买量 :
+										<input type="text" name="te7" placeholder="请输入" dir="rtl" class="input input3">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div>
+										<div class="box box4">
+											商品缩略图 :
+											<input type="text" name="txt7" dir="rtl" class="input">
+											<a href="javascript:;" class="file">上传图片
+												<input type="file" class="select_file input">
+											</a>
+											<button class="suolue"></button>
+										</div>
+										<img src="css/img/add_1.png" class="tupian">
+										<div class="clear"></div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="baozhang">商品描述</div>
+									<div id="editor" style="width:556px;height:240px;">
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="table_1">
+						<table >
+							<tr>
+								<td colspan="2" class="input_title">
+								属性设置
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="box box1">
+										是否热卖 :
+										<input type="text" name="te8" dir="rtl" class="input input4 input_drop" readonly="readonly">
+										<button class="xiala" onclick="hk_style()"></button>
+										<ul class="drop_1 drop">
+											<li>养老保险</li>
+											<li>医疗保险</li>
+											<li>失业保险</li>
+										</ul>
+									</div>
+								</td>
+								<td>
+									<div class="box box1">
+										是否新品 :
+										<input type="text" name="te8" dir="rtl" class="input input4 input_drop" readonly="readonly">
+										<button class="xiala" onclick="hk_style()"></button>
+										<ul class="drop_1 drop">
+											<li>是</li>
+											<li>否</li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="box box1">
+										是否推荐 :
+										<input type="text" name="te8" dir="rtl" class="input input4 input_drop" readonly="readonly">
+										<button class="xiala" onclick="hk_style()"></button>
+										<ul class="drop_1 drop">
+											<li>是</li>
+											<li>否</li>
+										</ul>
+									</div>
+								</td>
+								<td>
+									<div class="box box1">
+										商品类型 :
+										<input type="text" name="te8" dir="rtl" class="input input4 input_drop" readonly="readonly">
+										<button class="xiala" onclick="hk_style()"></button>
+										<ul class="drop_1 drop">
+											<li>养老保险</li>
+											<li>医疗保险</li>
+											<li>失业保险</li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="box box2">
+										商品属性 :
+										<input type="text" name="te3" placeholder="由商品类型决定" dir="rtl" class="input input2">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="box box1">
+										是否配送 :
+										<input type="text" name="te7" placeholder="请输入" dir="rtl" class="input input3">
+									</div>
+								</td>
+								<td>
+									<div class="td_ri">需要配送表示购买时需填写购买地址，需要计算运费</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="input_title">
+								SEO设置
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="box5">
+										<div class="box_title">贷款SEO自定义标题:</div>
+										<textarea placeholder="请输入"></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="box5">
+										<div class="box_title">贷款SEO自定义关键词:</div>
+										<textarea placeholder="请输入"></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="box5">
+										<div class="box_title">贷款SEO自定义描述:</div>
+										<textarea placeholder="请输入"></textarea>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="clear"></div>
+				</div>	
+			</div>
+			<div class="btn_g">
+				<button class="btn btn1">提交</button>
+				<button class="btn btn2">返回</button>
+			</div>
+		</div>
+		<div class="bottom"></div>
+	</div>
+	<div class="mask" id="mask"></div>
+</body>
+</html>

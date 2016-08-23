@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.edianjucai.model.Goods;
 import com.edianjucai.model.GoodsCate;
 import com.edianjucai.model.GoodsOrder;
+import com.edianjucai.model.GoodsType;
 import com.edianjucai.page.GoodsCatePagination;
 import com.edianjucai.page.GoodsOrderPagination;
 import com.edianjucai.page.GoodsPagination;
@@ -73,6 +74,12 @@ public class GoodsDao {
     }
 
     // good cate
+    
+    @SuppressWarnings("unchecked")
+    public List<GoodsCate> findAllGoodsCate() {
+        Query query = getSession().createQuery("from GoodsCate");
+        return query.list();
+    }
     @SuppressWarnings("unchecked")
     public List<GoodsCate> findAllGoodsCate(GoodsCatePagination goodsCatePagination) {
         String hql = XMLReaderUtil.getSql("goodsCate");
@@ -166,5 +173,16 @@ public class GoodsDao {
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    //goods type
+    
+    public GoodsType getGoodsTypeById(int id) {
+        return (GoodsType) getSession().get(GoodsType.class, id);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<GoodsType> findAllGoodsType() {
+        return getSession().createQuery("from GoodsType").list();
     }
 }
