@@ -10,7 +10,10 @@
     <script src="../static/js/jquery-ui.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-        $(".datepicker" ).datepicker();
+        $(".datepicker" ).datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
         $(".input_drop").click(function(){
             $(this).next().next().show();
             showMask();

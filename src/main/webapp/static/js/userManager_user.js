@@ -1,6 +1,12 @@
 $(document).ready(function(){
-	$("#datepicker" ).datepicker();
-	$("#datepicker1" ).datepicker();
+	$("#datepicker" ).datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+	$("#datepicker1" ).datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
 	$("#checkAll").click(function(){
 		$('input[name="subBox"]').prop("checked",this.checked);
 	});
