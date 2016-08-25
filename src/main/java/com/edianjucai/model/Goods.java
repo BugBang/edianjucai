@@ -40,6 +40,8 @@ public class Goods implements Serializable{
     private int isHot;
     @Column(name = "is_new")
     private int isNew;
+    @Column(name = "score")
+    private int score;
     @Column(name = "is_recommend")
     private int isRecommend;
     @Column(name = "seo_title")
@@ -58,6 +60,14 @@ public class Goods implements Serializable{
     private BigDecimal money;
     @Column(name = "url")
     private String url;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     public int getId() {
         return id;

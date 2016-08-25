@@ -6,7 +6,7 @@
 	        idno, 
 	        user_name as userName, 
 	        create_time as createTime, 
-	        mobile, 
+	        mobile as mobile, 
 	        ips_acct_no as ipsAcctNo, 
 	        real_name as realName, 
 	        tuiguang as tuiGuang, 
@@ -129,4 +129,12 @@
     <sql id = "getMsgSystemCount">
         select count(1) from edian_msg_system
     </sql>
+    
+    <hql id = "showAllMAdv">
+        from MAdv
+    </hql>
+    
+    <hql id = "getMAdvCount">
+        select count(*) from MAdv
+    </hql>
 </sqls>

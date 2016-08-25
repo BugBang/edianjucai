@@ -343,6 +343,45 @@ a{
 }
 
 
+.mask{
+	display: none;
+	background-color: rgba(255,255,255,0.3);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+
+.drop{
+	position: absolute;
+	display: none;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	background-color: #dddddd;
+	position: absolute;
+	z-index: 1000;
+}
+
+.drop_1{
+	width: 263px;
+	top: 47px;
+	left: -1px;
+}
+
+
+.drop_2{
+	width: 558px;
+	top: 47px;
+	left: -1px;
+}
+
+.drop li{
+	height: 57px;
+	border-bottom: 1px solid #fff;
+	line-height: 57px;
+	padding-left: 15px;
+}
 
 
 

@@ -1,22 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <!DOCTYPE>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
-</head>
-<body>
-    <h1>${admin.replayName}</h1>
-    <h2>show user banks</h2>
-    <c:forEach var="userBank" items="${userBanks}" varStatus="count">  
-         <tr>  
-            <td>${userBank.userName }</td>
-            <td>${userBank.bankCard }</td>
-        </tr>  
-    </c:forEach>  
-</body>
-</html> --%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +45,7 @@
                     </a>
                 </li>
                 <li class="bg">
-                    <a href="userManager_user.html">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
@@ -94,7 +77,7 @@
                     <li><a href="<%=url%>/Business/index">会员管理</a></li>
                     <li  id="title_bg"><a href="<%=url%>/Business/showAllUserBank">银行卡管理</a></li>
                     <li><a href="<%=url%>/Business/showAllEcvType">红包管理</a></li>
-                    <li style="border-right: none;"><a href="#">站内消息管理</a></li>
+                    <li style="border-right: none;"><a href="<%=url%>/Business/showAllMsgSystem">站内消息管理</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>

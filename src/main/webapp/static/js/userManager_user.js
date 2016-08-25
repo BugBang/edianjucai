@@ -1,6 +1,12 @@
 $(document).ready(function(){
-	$("#datepicker" ).datepicker();
-	$("#datepicker1" ).datepicker();
+	$("#datepicker" ).datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+	$("#datepicker1" ).datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
 	$("#checkAll").click(function(){
 		$('input[name="subBox"]').prop("checked",this.checked);
 	});
@@ -34,6 +40,10 @@ $(document).ready(function(){
 		}
 	})
 	
+	$("#endTime").click(function() {
+		alert("1");
+	})
+	
 })
 
 function showDetail(){
@@ -53,7 +63,7 @@ function tiaozhuan(url){
 	}
 	
 	if((/^(\+|-)?\d+$/.test(str)) && str > 0)	{
-		location.href = url + "?currentPage=" + str + "&userName=" + $("#userName").val() + "&realName=" + $("#realName").val() + "&mobile=" + $("#mobile").val() + "&refName=" + $("#refName").val() + "&beginTime=" + $("#beginTime").val() + "&endTime=" + $("#endTime").val();
+		location.href = url + "?currentPage=" + str + "&userName=" + $("#userName").val() + "&realName=" + $("#realName").val() + "&mobile=" + $("#mobile").val() + "&refName=" + $("#refName").val() + "&beginTime=" + $(".begin_time").val() + "&endTime=" + $(".end_time").val();
 		return true;
 	} else {
 		alert('请输入正确的数字');

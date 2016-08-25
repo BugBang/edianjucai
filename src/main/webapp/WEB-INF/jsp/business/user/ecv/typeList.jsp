@@ -2,25 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="/tags" prefix="date"%>
-<%-- <!DOCTYPE>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
-</head>
-<body>
-    <h1>${admin.replayName}</h1>
-    <h2>show ecv type</h2>
-    <h3>${msg }</h3>
-    <c:forEach var="ecvType" items="${ecvTypes}" varStatus="count">  
-         <tr>  
-            <td>${ecvType.id }</td>
-            <td>${ecvType.name }</td>
-        </tr>  
-    </c:forEach>  
-</body>
-</html> --%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +47,7 @@
                     </a>
                 </li>
                 <li class="bg">
-                    <a href="userManager_user.html">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
@@ -154,7 +135,7 @@
                 <a href="<%=url%>/Business/showAllEcvType?currentPage=${pagination.totalPage }" class="a_0 a_4"></a>
                 <div class="page_all">共<span>${pagination.totalPage }</span>页</div>
                 <div class="page_fo">到<input type="text" value="${pagination.currentPage }" class="page_f" id="page">页</div>
-                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan('<%=url%>/Business/index')"/>
+                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan('<%=url%>/Business/showAllEcvType')"/>
             </div>
         </div>
         </div>

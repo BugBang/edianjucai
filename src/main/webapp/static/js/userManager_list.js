@@ -1,6 +1,4 @@
 $(document).ready(function(){
-	$("#datepicker" ).datepicker();
-	$("#datepicker1" ).datepicker();
 	$("#checkAll").click(function(){
 		$('input[name="subBox"]').prop("checked",this.checked);
 	});
@@ -39,9 +37,18 @@ function showDetail(){
 	$("#dai_detail").toggle();
 }
 
-function tiaozhuan(){
+function tiaozhuan(url){
 	var str = $("#page").val();  
+	var totalPage = $(".page_all span").text();
+	if (str <= 1) {
+		str = 1;
+	}
+	
+	if (str >= totalPage) {
+		str = totalPage;
+	}
 	if((/^(\+|-)?\d+$/.test(str)) && str > 0)	{
+		location.href = url + "?currentPage=" + str;
 		return true;
 	} else {
 		alert('请输入正确的数字');
@@ -51,6 +58,10 @@ function tiaozhuan(){
 
 function goToAddEcvType(url) {
 	window.location.href = url + "/Business/goToAddEcvType"
+}
+
+function goToAddMsgSystem(url) {
+	window.location.href = url + "/Business/goToAddMsgSystem"
 }
 
 

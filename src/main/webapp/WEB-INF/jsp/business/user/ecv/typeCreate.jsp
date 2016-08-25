@@ -1,22 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <!DOCTYPE>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
-</head>
-<body>
-    <h1>${admin.replayName}</h1>
-    <h2>create ecv type</h2>
-    <h3>${addMsg }</h3>
-    <form action="<%=request.getContextPath()%>/Business/addEcvType" method="get">
-        <input type = "text" name = "name"/>
-        <input type = "submit" value = "增加"/>
-    </form>
-</body>
-</html> --%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +8,29 @@
     <link rel="stylesheet" href="../static/js/jquery-ui.css">
     <script type="text/javascript" src="../static/js/jquery-1.12.2.min.js"></script>
     <script src="../static/js/jquery-ui.js"></script>
+
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $(".input_drop").click(function(){
+                $(this).next().next().show();
+                showMask();
+            }); 
+
+            $(".drop li").click(function(){
+                var str = $(this).html();
+                $('.drop').hide();
+                $(this).parents().siblings().val(str);
+                $("#mask").hide();  
+            });
+        })
+
+        function showMask(){
+            $("#mask").css("width",$(document).width());
+            $("#mask").css("height",$(document).height());
+            $("#mask").show();  
+        }
+
+    </script>
 </head>
 <% String url = request.getContextPath(); %>
 <body>
@@ -61,7 +67,7 @@
                     </a>
                 </li>
                 <li class="bg">
-                    <a href="userManager_user.html">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
@@ -116,11 +122,16 @@
                     <span class="input_right">可用次数为空或为0表示无限次数</span>
                     <div class="clear"></div>
                 </div>  
-                <div class="input_al">
+               <div class="input_al">
                     <div class="box box3" style="float: left;">
                         有效期开始时间 :
-                        <input type="text" name="txt4" dir="rtl" class="input input4">
+                        <input type="text" name="txt4" dir="rtl" class="input input4 input_drop" readonly="readonly"> 
                         <button class="xiala"></button> 
+                        <ul class="drop_1 drop">
+                            <li>养老保险</li>
+                            <li>医疗保险</li>
+                            <li>失业保险</li>
+                        </ul>
                     </div>
                     <span class="input_right">不设开始时间为即时生效</span>
                     <div class="clear"></div>
@@ -128,16 +139,26 @@
                 <div class="input_al">
                     <div class="box box3" style="float: left;">
                         有效期结束时间 :
-                        <input type="text" name="txt5" dir="rtl" class="input input4">  
+                        <input type="text" name="txt5" dir="rtl" class="input input4 input_drop" readonly="readonly">   
                         <button class="xiala"></button>
+                        <ul class="drop_1 drop">
+                            <li>养老保险</li>
+                            <li>医疗保险</li>
+                            <li>失业保险</li>
+                        </ul>
                     </div>
                     <span class="input_right">不设开始时间为永不过期<span>
                     <div class="clear"></div>
                 </div>
                 <div class="box box2">
                     发放类型 :
-                    <input type="text" name="txt6" dir="rtl" class="input input5">
+                    <input type="text" name="txt6" dir="rtl" class="input input5 input_drop" readonly="readonly">
                     <button class="xiala"></button>
+                    <ul class="drop_2 drop">
+                        <li>养老保险</li>
+                        <li>医疗保险</li>
+                        <li>失业保险</li>
+                    </ul>
                 </div>
                 
             </div>
@@ -148,5 +169,6 @@
         </div>
         <div class="bottom"></div>
     </div>
+    <div class="mask" id="mask"></div>
 </body>
 </html>

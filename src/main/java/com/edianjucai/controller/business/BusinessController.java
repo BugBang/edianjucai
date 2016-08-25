@@ -2,7 +2,9 @@ package com.edianjucai.controller.business;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.edianjucai.model.Adv;
@@ -27,10 +30,13 @@ import com.edianjucai.model.EcvType;
 import com.edianjucai.model.Goods;
 import com.edianjucai.model.GoodsCate;
 import com.edianjucai.model.GoodsOrder;
+import com.edianjucai.model.GoodsType;
+import com.edianjucai.model.MAdv;
 import com.edianjucai.model.MsgSystem;
 import com.edianjucai.model.Nav;
 import com.edianjucai.model.User;
 import com.edianjucai.model.vo.GoodsOrderVo;
+import com.edianjucai.model.vo.GoodsVo;
 import com.edianjucai.model.vo.UserBankVo;
 import com.edianjucai.model.vo.UserVo;
 import com.edianjucai.page.AdvPagination;
@@ -42,6 +48,7 @@ import com.edianjucai.page.EcvTypePagination;
 import com.edianjucai.page.GoodsCatePagination;
 import com.edianjucai.page.GoodsOrderPagination;
 import com.edianjucai.page.GoodsPagination;
+import com.edianjucai.page.MAdvPagination;
 import com.edianjucai.page.MsgSystemPagination;
 import com.edianjucai.page.NavPagination;
 import com.edianjucai.page.UserBankPagination;
@@ -50,6 +57,7 @@ import com.edianjucai.service.ArticleServiceImpl;
 import com.edianjucai.service.DealServiceImpl;
 import com.edianjucai.service.FrontendServiceImpl;
 import com.edianjucai.service.GoodsServiceImpl;
+import com.edianjucai.service.SystemSetUpServiceImpl;
 import com.edianjucai.service.UserServiceImpl;
 import com.edianjucai.util.ExportExcelUtil;
 
@@ -67,6 +75,8 @@ public class BusinessController {
     private FrontendServiceImpl frontendService;
     @Autowired
     private DealServiceImpl dealService;
+    @Autowired
+    private SystemSetUpServiceImpl systemSetUpServiceImpl;
 
     @RequestMapping(value = "/index")
     public ModelAndView showUserList(UserPagination userPagination) {
@@ -148,12 +158,6 @@ public class BusinessController {
         article.setSubTitle("subTile");
         if (articleService.createArticle(article)) {
             session.setAttribute("successMsg", "add success!");
-            /*
-             * model.addObject("articleTitle", stitle);
-             * model.addObject("currentPage", currentPage); model.setViewName(
-             * "redirect:/business/showAllArticle?currentPage=" + currentPage +
-             * "&title=" + stitle);
-             */
             model.addObject("currentPage", 1);
             model.addObject("title", "");
             model.setViewName("redirect:/Business/showAllArticle");
@@ -266,8 +270,9 @@ public class BusinessController {
     @RequestMapping(value = "/showAllGoods")
     public ModelAndView showAllGoods(@ModelAttribute("goodsPagination") GoodsPagination goodsPagination) {
         ModelAndView model = new ModelAndView();
-        List<Goods> goods = goodsService.findAllGoods(goodsPagination);
+        List<GoodsVo> goods = goodsService.findAllGoods(goodsPagination);
         model.addObject("goods", goods);
+        model.addObject("pagination", goodsPagination);
         model.setViewName("/business/goods/list");
         return model;
     }
@@ -295,8 +300,12 @@ public class BusinessController {
     @RequestMapping(value = "/goToModifyGoods")
     public ModelAndView goToModefyGoods(@RequestParam(value = "id", defaultValue = "-1") int id) {
         ModelAndView model = new ModelAndView();
-        Goods good = goodsService.getGoodsById(id);
+        GoodsVo good = goodsService.getGoodsById(id);
         if (good != null) {
+            List<GoodsCate> goodsCates = goodsService.findAllGoodsCate();
+            List<GoodsType> goodsTypes = goodsService.findAllGoodsType();
+            model.addObject("goodsCates", goodsCates);
+            model.addObject("goodsTypes", goodsTypes);
             model.addObject("good", good);
             model.setViewName("/business/goods/modify");
         } else {
@@ -306,6 +315,22 @@ public class BusinessController {
         }
         return model;
     }
+    
+    @RequestMapping(value = "/setImage")
+    @ResponseBody
+    public Map<String, String> setImage(String imgUrl, String imgName) {
+        System.out.println("========进来了====================================================================================");
+        Map<String, String> map = new HashMap<String, String>(1); 
+        
+        map.put("success", "true");
+        return map;
+    }
+    
+    @RequestMapping(value = "/modifyGoods")
+    public ModelAndView modifyGoods(Goods goods) {
+        
+        return null;
+    }
 
     @RequestMapping(value = "/showAllGoodsCate")
     public ModelAndView showAllGoodsCate(
@@ -313,6 +338,7 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         List<GoodsCate> goodsCates = goodsService.findAllGoodsCate(goodsCatePagination);
         model.addObject("goodsCates", goodsCates);
+        model.addObject("pagination", goodsCatePagination);
         model.setViewName("/business/goods/cate/list");
         return model;
     }
@@ -327,8 +353,6 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         if (goodsService.addGoodsCate(goodsCate)) {
             session.setAttribute("msg", "add success");
-            model.addObject("name", "");
-            model.addObject("currentPage", 1);
             model.setViewName("redirect:/Business/showAllGoodsCate");
         } else {
             model.addObject("errMsg", "add fail");
@@ -345,8 +369,6 @@ public class BusinessController {
             model.addObject("goodsCate", goodsCate);
             model.setViewName("/business/goods/cate/modify");
         } else {
-            model.addObject("name", "");
-            model.addObject("currentPage", 1);
             model.setViewName("redirect:/Business/showAllGoodsCate");
         }
         return model;
@@ -357,8 +379,6 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         if (goodsService.addGoodsCate(goodsCate)) {
             session.setAttribute("msg", "modify success");
-            model.addObject("name", "");
-            model.addObject("currentPage", 1);
             model.setViewName("redirect:/Business/showAllGoodsCate");
         } else {
             model.addObject("id", goodsCate.getId());
@@ -391,10 +411,8 @@ public class BusinessController {
                     "兑换时间#exTime", "发货时间#deliveryTime", "订单状态#orderStatus", "是否配送#isDelivery" };
             ExportExcelUtil.export(response, "Test", excelHeader, goodsOrderVos);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -690,6 +708,7 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         List<MsgSystem> msgSystems = userService.findAllMsgSystem(msgSystemPagination);
         model.addObject("msgSystems", msgSystems);
+        model.addObject("pagination", msgSystemPagination);
         model.setViewName("/business/user/msg/systemList");
         return model;
     }
@@ -734,8 +753,18 @@ public class BusinessController {
             model.setViewName("redirect:/Business/showAllMsgSystem");
         } else {
             model.addObject("addMsg", "add fial");
-            model.setViewName("/busines/user/msg/systemCreate");
+            model.setViewName("/business/user/msg/systemCreate");
         }
+        return model;
+    }
+    
+    @RequestMapping(value = "/systemSetUp")
+    public ModelAndView systemSetUp(MAdvPagination mAdvPagination) {
+        ModelAndView model = new ModelAndView();
+        List<MAdv> mAdvs = systemSetUpServiceImpl.findAllMAdv(mAdvPagination);
+        model.addObject("mAdvs", mAdvs);
+        model.addObject("pagination", mAdvPagination);
+        model.setViewName("/business/systemSetUp/mAdvList");
         return model;
     }
 }

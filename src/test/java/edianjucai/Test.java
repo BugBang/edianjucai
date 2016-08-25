@@ -1,10 +1,11 @@
 package edianjucai;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.UUID;
 
-import com.edianjucai.util.MD5Util;
+import com.edianjucai.util.DateFormatUtils;
+import com.edianjucai.util.FileUtil;
 
 public class Test {
 
@@ -22,7 +23,7 @@ public class Test {
 
     }
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         List<String> test = new ArrayList<String>();
         int i = 0;
         while (true) {
@@ -34,15 +35,18 @@ public class Test {
             test.add(result);
             System.out.println(i++);
         }
-    }
+    }*/
 
-    /*public static void main(String[] args) throws ParseException {
-        String str = "06/15/2016";
+    public static void main(String[] args) throws ParseException {
+        /*String str = "06/15/2016";
         Date date = new Date();
-        date.setTime(1466560778000l);
+        date.setTime(1356285180 * 1000);
         System.out.println(DateFormatUtils.dateToString(date));
         System.out.println(date.getTime() / 1000);
-        System.out.println(DateFormatUtils.StringToDate(str, "MM/dd/yyyy").getTime() / 1000);
-    }*/
+        System.out.println(DateFormatUtils.StringToDate(str, "MM/dd/yyyy").getTime() / 1000);*/
+        String oldPath = "D:\\document\\项目\\会员管理\\css\\img\\01.png";
+        String newPath = "D:\\document\\项目\\积分商城\\test\\jesse.png";
+        FileUtil.Copy(oldPath, newPath);
+    }
 
 }

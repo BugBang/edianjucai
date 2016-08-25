@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.edianjucai.model.Goods;
 import com.edianjucai.model.GoodsCate;
 import com.edianjucai.model.GoodsOrder;
+import com.edianjucai.model.GoodsType;
 import com.edianjucai.page.GoodsCatePagination;
 import com.edianjucai.page.GoodsOrderPagination;
 import com.edianjucai.page.GoodsPagination;
@@ -32,7 +33,7 @@ public class GoodsDao {
     public List<Goods> findAllGoods(GoodsPagination goodsPagination) {
         String hql = XMLReaderUtil.getSql("goods");
         Query query = getSession().createQuery(hql);
-        query.setString("name", "%" + goodsPagination.getName() + "%");
+        query.setString("name", "%" + (goodsPagination.getName() != null? goodsPagination.getName() : "") + "%");
         query.setFirstResult(goodsPagination.getStart());
         query.setMaxResults(goodsPagination.getPageSize());
 
@@ -73,6 +74,12 @@ public class GoodsDao {
     }
 
     // good cate
+    
+    @SuppressWarnings("unchecked")
+    public List<GoodsCate> findAllGoodsCate() {
+        Query query = getSession().createQuery("from GoodsCate");
+        return query.list();
+    }
     @SuppressWarnings("unchecked")
     public List<GoodsCate> findAllGoodsCate(GoodsCatePagination goodsCatePagination) {
         String hql = XMLReaderUtil.getSql("goodsCate");
@@ -125,7 +132,7 @@ public class GoodsDao {
         String hql = XMLReaderUtil.getSql("goodsOrder");
         String beginTime = goodsOrderPagination.getBeginTime();
         String endTime = goodsOrderPagination.getEndTime();
-        if (!beginTime.isEmpty() && !beginTime.isEmpty()) {
+        if (beginTime != null && endTime != null && !beginTime.isEmpty() && !beginTime.isEmpty()) {
             hql += " where exTime between " + DateFormatUtils.StringToDate(beginTime, "yyyy-MM-dd").getTime() / 1000 + " and "
                     + DateFormatUtils.StringToDate(endTime, "yyyy-MM-dd").getTime() / 1000;
         }
@@ -147,7 +154,7 @@ public class GoodsDao {
         String sql = XMLReaderUtil.getSql("goodsOrderCount");
         String beginTime = goodsOrderPagination.getBeginTime();
         String endTime = goodsOrderPagination.getEndTime();
-        if (!beginTime.isEmpty() && !beginTime.isEmpty()) {
+        if (beginTime != null && endTime != null && !beginTime.isEmpty() && !endTime.isEmpty()) {
             sql += " where ex_time >=" + DateFormatUtils.StringToDate(beginTime, "yyyy-MM-dd").getTime() / 1000 + " and ex_time <="
                     + DateFormatUtils.StringToDate(endTime, "yyyy-MM-dd").getTime() / 1000;
         }
@@ -166,5 +173,16 @@ public class GoodsDao {
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    //goods type
+    
+    public GoodsType getGoodsTypeById(int id) {
+        return (GoodsType) getSession().get(GoodsType.class, id);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<GoodsType> findAllGoodsType() {
+        return getSession().createQuery("from GoodsType").list();
     }
 }

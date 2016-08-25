@@ -68,6 +68,7 @@ public class UserDao {
         scalars.put("idno", StandardBasicTypes.STRING);
         scalars.put("userName", StandardBasicTypes.STRING);
         scalars.put("realName", StandardBasicTypes.STRING);
+        scalars.put("mobile", StandardBasicTypes.STRING);
         scalars.put("ipsAcctNo", StandardBasicTypes.STRING);
         scalars.put("tuiGuang", StandardBasicTypes.STRING);
         scalars.put("isEffect", StandardBasicTypes.INTEGER);
