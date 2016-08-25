@@ -66,15 +66,6 @@ public class UserServiceImpl {
     }
     
     @Transactional
-    public boolean deleteUserBankById(List<Integer> ids) {
-        if (userDao.deleteBankCountByIds(ids)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    @Transactional
     private UserBankVo poToVo(UserBank po) {
         UserBankVo vo = new UserBankVo();
         
@@ -90,6 +81,14 @@ public class UserServiceImpl {
         vo.setRegionLv3(po.getRegionLv3());
         vo.setRegionLv4(po.getRegionLv4());
         return vo;
+    }
+    @Transactional
+    public boolean deleteUserBankById(List<Integer> ids) {
+        if (userDao.deleteBankCountByIds(ids)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     // ecv 

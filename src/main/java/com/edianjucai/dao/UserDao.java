@@ -120,7 +120,7 @@ public class UserDao {
         Map<String, Type> scalars = new HashMap<String, Type>();
         scalars.put("id", StandardBasicTypes.INTEGER);
         List<UserVo> users = DaoUtil.getVoListBySql(getSession(), sql, UserVo.class, scalars, userName);
-        if (users.isEmpty() || users.size() > 0) {
+        if (!users.isEmpty() && users.size() > 0) {
             int id = users.get(0).getId();
             return id;
         } else {

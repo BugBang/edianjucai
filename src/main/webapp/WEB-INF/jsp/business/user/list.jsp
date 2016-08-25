@@ -39,7 +39,7 @@
         <div class="nav">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="showAllDeal">
                         <img src="../static/img/img1/icon1.png">
                         <div>贷款管理</div>
                     </a>
