@@ -1,6 +1,4 @@
 $(document).ready(function(){
-	$("#datepicker" ).datepicker();
-	$("#datepicker1" ).datepicker();
 	$("#checkAll").click(function(){
 		$('input[name="subBox"]').prop("checked",this.checked);
 	});

@@ -29,6 +29,7 @@ import com.edianjucai.model.Article;
 import com.edianjucai.model.ArticleCate;
 import com.edianjucai.model.Deal;
 import com.edianjucai.model.DealCate;
+import com.edianjucai.model.DealMappingMsg;
 import com.edianjucai.model.Ecv;
 import com.edianjucai.model.EcvType;
 import com.edianjucai.model.Goods;
@@ -584,17 +585,47 @@ public class BusinessController {
         return model;
     }
 
+    // deal
     @RequestMapping(value = "/showAllDeal")
     public ModelAndView showAllDeal(DealPagination dealPagination) {
         ModelAndView model = new ModelAndView();
         List<Deal> deals = dealService.findAllDeal(dealPagination);
         List<DealCate> dealCates = dealService.findAllDealCate();
+        List<DealMappingMsg> mappingMsgs = dealService.findDealMappingMsg(deals);
         model.addObject("deals", deals);
         model.addObject("dealCates", dealCates);
+        model.addObject("pagination", dealPagination);
+        model.addObject("mappingMsgs", mappingMsgs);
         model.setViewName("/business/deal/list");
         return model;
     }
-
+    
+    @RequestMapping(value = "/goToAddDeal")
+    public String goToAddDeal() {
+        return "/business/deal/create";
+    }
+    
+    @RequestMapping(value = "/addDeal")
+    public ModelAndView addAdv(Deal deal, HttpSession session) {
+        ModelAndView model = new ModelAndView();
+        if (dealService.addDeal(deal)) {
+            session.setAttribute("msg", "Add success");
+            model.setViewName("redirect:/Business/showAllDeal");
+        } else {
+            model.addObject("addMsg", "Add fail");
+            model.setViewName("/business/showAllDeal");
+        }
+        return model;
+    }
+    
+    @RequestMapping(value = "/goToModifyDeal")
+    public ModelAndView goToModifyDeal(@RequestParam(value = "id", defaultValue = "-1") int id) {
+        ModelAndView model = new ModelAndView();
+        model.addObject("test", id);
+        model.setViewName("/business/deal/modify");
+        return model;
+    }
+    
     // userbank
 
     @RequestMapping(value = "/showAllUserBank")

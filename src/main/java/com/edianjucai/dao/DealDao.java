@@ -1,5 +1,6 @@
 package com.edianjucai.dao;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -11,7 +12,13 @@ import org.springframework.stereotype.Repository;
 
 import com.edianjucai.model.Deal;
 import com.edianjucai.model.DealCate;
+import com.edianjucai.model.GoodsCate;
+import com.edianjucai.model.GoodsOrder;
+import com.edianjucai.page.DealCatePagination;
 import com.edianjucai.page.DealPagination;
+import com.edianjucai.page.GoodsCatePagination;
+import com.edianjucai.page.GoodsOrderPagination;
+import com.edianjucai.util.DateFormatUtils;
 import com.edianjucai.util.XMLReaderUtil;
 
 @Repository
