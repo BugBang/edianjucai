@@ -1,31 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <!DOCTYPE>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
-</head>
-<body>
-    <h1>${admin.replayName}</h1>
-    <h2>modify goods</h2>
-    <h3>${msg }</h3>
-    <form action="<%=request.getContextPath()%>/Business/modifyGoods" method="get">
-        <input type = "hidden" name = "id" value = "${good.id }"/>
-        <input type = "text" name = "name" value = "${good.name }"/>
-        <input type = "text" name = "subName" value = "${good.subName }"/>
-        <input type = "submit" value = "modify"/>
-    </form>
-</body>
-</html> --%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../static/css/jifen_listAdd.css">
     <link rel="stylesheet" href="../static/js/jquery-ui.css">
-    <script type="text/javascript" src="../static/js/jquery-1.12.2.min.js"></script>
+    <script type="text/javascript" src="../static/js/jquery-3.1.0.min.js"></script>
     <script src="../static/js/jquery-ui.js"></script>
+    <script src="../static/js/ajaxfileupload.js"></script>
 
     <script type="text/javascript" src="../static/js/text/ueditor.config.js"></script>
     <script type="text/javascript" src="../static/js/text/ueditor.all.min.js"> </script>
@@ -44,26 +27,28 @@
                     alert('图片大小不能超过 3MB!');
                     return false;
                 }
-                $.ajax({
-                    type: "POST",
-                    url: "<%=request.getContextPath()%>/Business/setImage",
-                    data: {'imgUrl': this.value, 'imgName': file.name},
-                    dataType: "json",
-                    success: function(data) {
-                        if (data.success) {
-                            alert("success");
-                            var URL = window.URL || window.webkitURL;
-                            var imgURL = URL.createObjectURL(file);
-                            obj.parent().parent().next().attr('src', imgURL);
-                        } else {
-                            alert("fial");
-                        }
-                    }
-                });
+		        var url = window.URL || window.webkitURL;
+		        var imgURL = url.createObjectURL(file);
+	            obj.parent().parent().next().attr('src', imgURL);
+                var formData = new FormData($( "#uploadForm" )[0]);
+                $.ajax({  
+                    url: '<%=request.getContextPath()%>/Business/setImage',  
+                    type: 'POST',  
+                    data: formData,  
+                    async: false,  
+                    cache: false,  
+                    contentType: false,  
+                    processData: false,  
+                    success: function (returndata) {  
+                        $("#realPic").val(returndata);
+                    },  
+                    error: function (returndata) {  
+                        alert(returndata);  
+                    }  
+               });  
             }
             
         });
-
         $(".input_drop").click(function(){
                 $(this).next().next().show();
                 showMask();
@@ -87,7 +72,7 @@
 
     </script>
 </head>
-<%String url = request.getContextPath(); %>
+<%String url = request.getContextPath();%>
 <body>
     <div class="sheet">
         <div class="head">  
@@ -127,7 +112,7 @@
                         <div>会员管理</div>
                     </a>
                 </li>
-                <li>
+                <li class="bg">
                     <a href="#">
                         <img src="../static/img/img1/icon3.png">
                         <div>积分商城</div>
@@ -139,7 +124,7 @@
                         <div>前端管理</div>
                     </a>
                 </li>
-                <li class="bg">
+                <li>
                     <a href="#">
                         <img src="../static/img/img1/icon5.png">
                         <div>系统设置</div>
@@ -147,14 +132,14 @@
                 </li>
             </ul>
         </div>
-        <form action="<%=url%>/Business/modifyGoods" method="post">
+        <form action="<%=url%>/Business/modifyGoods" id="uploadForm" method="post">
         <div class="list">
             <div class="arrow"></div>
             <div class="sign_all">
                 <ul class="sign_title">
-                    <li><a href="#">商品列表</a></li>
+                    <li style="border-right: none;"  id="title_bg"><a href="#">商品列表</a></li>
                     <li><a href="#">商品分类</a></li>
-                    <li style="border-right: none;"  id="title_bg"><a href="#">兑换商品</a></li>
+                    <li><a href="#">兑换商品</a></li>
                     <div class="clear"></div>
                 </ul>
                 <div class="table_top">新增商品</div>
@@ -176,8 +161,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <div class="box box1">
-                                        简短名称 :
+                                    <div class="box box1">简短名称 :
                                         <input type="text" name="subName" placeholder="请输入" value="${good.subName }" dir="rtl" class="input input3">
                                     </div>
                                 </td>
@@ -251,12 +235,14 @@
                                         <div class="box box4">商品缩略图 :
                                             <input type="text" name="txt7" dir="rtl" class="input">
                                             <a href="javascript:;" class="file">上传图片
-                                                <input type="file" name="img" class="select_file input">
+                                                <input type="file" name="realPicFile" id="realPicFile" class="select_file input">
+                                                <input type="hidden" name="img" id="realPic"/>
+                                                <input type="hidden" name="imgName" class="imgName" />
                                             </a>
                                             <button class="suolue"></button>
                                         </div>
                                         <c:if test="${!empty good.img}">
-                                            <img src="${good.img }" class="tupian">
+                                            <img src="../images/${good.img }" class="tupian">
                                         </c:if>
                                         <c:if test="${empty good.img }">
                                             <img src="../static/img/img/add_1.png" class="tupian">

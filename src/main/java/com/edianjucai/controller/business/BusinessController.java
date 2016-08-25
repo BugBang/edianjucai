@@ -1,15 +1,17 @@
 package com.edianjucai.controller.business;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.edianjucai.model.Adv;
@@ -58,7 +63,9 @@ import com.edianjucai.service.FrontendServiceImpl;
 import com.edianjucai.service.GoodsServiceImpl;
 import com.edianjucai.service.SystemSetUpServiceImpl;
 import com.edianjucai.service.UserServiceImpl;
+import com.edianjucai.util.DateFormatUtils;
 import com.edianjucai.util.ExportExcelUtil;
+import com.edianjucai.util.FileUtil;
 
 @Controller
 @RequestMapping("/Business")
@@ -101,7 +108,7 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         return model;
     }
-    
+
     @RequestMapping(value = "/goToModifyUser")
     public ModelAndView goToModifyUser(@RequestParam(value = "id", defaultValue = "-1") int id) {
         ModelAndView model = new ModelAndView();
@@ -277,8 +284,14 @@ public class BusinessController {
     }
 
     @RequestMapping(value = "/goToAddGoods")
-    public String goToAddGoods() {
-        return "/business/goods/create";
+    public ModelAndView goToAddGoods() {
+        ModelAndView model = new ModelAndView();
+        List<GoodsCate> goodsCates = goodsService.findAllGoodsCate();
+        List<GoodsType> goodsTypes = goodsService.findAllGoodsType();
+        model.addObject("goodsCates", goodsCates);
+        model.addObject("goodsTypes", goodsTypes);
+        model.setViewName("/business/goods/create");
+        return model;
     }
 
     @RequestMapping(value = "/addGoods")
@@ -314,20 +327,33 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/setImage")
     @ResponseBody
-    public Map<String, String> setImage(String imgUrl, String imgName) {
-        System.out.println("========进来了====================================================================================");
-        Map<String, String> map = new HashMap<String, String>(1); 
-        
-        map.put("success", "true");
-        return map;
+    public String setImage(HttpServletRequest request)
+            throws IOException {
+        Date date = new Date();
+        MultipartHttpServletRequest MulRequest = request instanceof MultipartHttpServletRequest
+                ? (MultipartHttpServletRequest) request : null;
+        Iterator<String> fileNames = MulRequest.getFileNames();
+        String imgName = "";
+        if (fileNames.hasNext()) { // 遍历请求中的图片信息
+            String fName = fileNames.next(); // 图片对应的参数名
+            MultipartFile mulFile = MulRequest.getFile(fName); // 获取到图片
+            imgName = mulFile.getOriginalFilename();
+            String folderName = DateFormatUtils.dateToString(date, "yyyyMMdd");
+            String fileName = DateFormatUtils.dateToString(date, "yyMMddHHmmss") + imgName.substring(imgName.indexOf("."));
+            String path = folderName + "/" + fileName;
+            FileUtil.Copy(mulFile, folderName, fileName);
+            return path;
+        } else {
+            return "error";
+        }
     }
-    
+
     @RequestMapping(value = "/modifyGoods")
     public ModelAndView modifyGoods(Goods goods) {
-        
+
         return null;
     }
 
@@ -343,8 +369,12 @@ public class BusinessController {
     }
 
     @RequestMapping(value = "/goToAddGoodsCate")
-    public String goToGoodsCate() {
-        return "/business/goods/cate/create";
+    public ModelAndView goToGoodsCate() {
+        ModelAndView model = new ModelAndView();
+        List<GoodsCate> goodsCates = goodsService.findAllGoodsCate();
+        model.addObject("goodsCates", goodsCates);
+        model.setViewName("/business/goods/cate/create");
+        return model;
     }
 
     @RequestMapping(value = "/addGoodsCate")
@@ -385,7 +415,7 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/showAllGoodsOrder")
     public ModelAndView showAllGoodsOrder(GoodsOrderPagination goodsOrderPagination) {
         ModelAndView model = new ModelAndView();
@@ -400,13 +430,14 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/exportProject")
     public void exportProject(HttpServletResponse response) {
         List<GoodsOrderVo> goodsOrderVos;
         try {
             goodsOrderVos = goodsService.findAllGoodsOrder();
-            String[] excelHeader = {"编号#id", "订单号#orderSn", "商品名称#goodsName", "用户名#userName","所需积分#score", "兑换时间#exTime", "发货时间#deliveryTime", "订单状态#orderStatus", "是否配送#isDelivery"};
+            String[] excelHeader = { "编号#id", "订单号#orderSn", "商品名称#goodsName", "用户名#userName", "所需积分#score",
+                    "兑换时间#exTime", "发货时间#deliveryTime", "订单状态#orderStatus", "是否配送#isDelivery" };
             ExportExcelUtil.export(response, "Test", excelHeader, goodsOrderVos);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -414,12 +445,12 @@ public class BusinessController {
             e.printStackTrace();
         }
     }
-    
+
     @RequestMapping(value = "/goToModifyGoodsOrder")
     public ModelAndView goToModifyGoodsOrder(@RequestParam(value = "id", defaultValue = "-1") int id) {
         ModelAndView model = new ModelAndView();
         GoodsOrder goodsOrder = goodsService.getGoodsOrderById(id);
-        
+
         if (goodsOrder != null) {
             model.addObject("goodsOrder", goodsOrder);
             model.setViewName("/business/goods/order/modify");
@@ -431,9 +462,9 @@ public class BusinessController {
         }
         return model;
     }
-    
-    //Nav
-    
+
+    // Nav
+
     @RequestMapping(value = "/showAllNav")
     public ModelAndView showAllNav(NavPagination navPagination) {
         ModelAndView model = new ModelAndView();
@@ -442,12 +473,12 @@ public class BusinessController {
         model.setViewName("/business/frontend/nav/list");
         return model;
     }
-    
+
     @RequestMapping(value = "/goToAddNav")
     public String goToAddNav() {
         return "/business/frontend/nav/create";
     }
-    
+
     @RequestMapping(value = "/addNav")
     public ModelAndView addNav(Nav nav, HttpSession session) {
         ModelAndView model = new ModelAndView();
@@ -462,7 +493,7 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/goToModifyNav")
     public ModelAndView goToModifyNav(@RequestParam(value = "id", defaultValue = "-1") int id) {
         ModelAndView model = new ModelAndView();
@@ -477,7 +508,7 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/modifyNav")
     public ModelAndView modifyNav(Nav nav, HttpSession session) {
         ModelAndView model = new ModelAndView();
@@ -492,9 +523,9 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     // adv
-    
+
     @RequestMapping(value = "/showAllAdv")
     public ModelAndView showAllAdv(AdvPagination advPagination) {
         ModelAndView model = new ModelAndView();
@@ -503,7 +534,7 @@ public class BusinessController {
         model.setViewName("/business/frontend/adv/list");
         return model;
     }
-    
+
     @RequestMapping(value = "/goToModifyAdv")
     public ModelAndView goToModifyAdv(@RequestParam(value = "id", defaultValue = "-1") int id) {
         ModelAndView model = new ModelAndView();
@@ -517,7 +548,7 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/modifyAdv")
     public ModelAndView modifyAdv(Adv adv, HttpSession session) {
         ModelAndView model = new ModelAndView();
@@ -532,12 +563,12 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/goToAddAdv")
     public String goToAddAdv() {
         return "/business/frontend/adv/create";
     }
-    
+
     @RequestMapping(value = "/addAdv")
     public ModelAndView addAdv(Adv adv, HttpSession session) {
         ModelAndView model = new ModelAndView();
@@ -552,7 +583,7 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/showAllDeal")
     public ModelAndView showAllDeal(DealPagination dealPagination) {
         ModelAndView model = new ModelAndView();
@@ -563,9 +594,9 @@ public class BusinessController {
         model.setViewName("/business/deal/list");
         return model;
     }
-    
-    //userbank
-    
+
+    // userbank
+
     @RequestMapping(value = "/showAllUserBank")
     public ModelAndView showAllUserBank(UserBankPagination userBankPagination) {
         ModelAndView model = new ModelAndView();
@@ -575,17 +606,17 @@ public class BusinessController {
         model.setViewName("/business/user/bank/list");
         return model;
     }
-    //使用ajax请求 接受json对象
-    /*@RequestMapping(value = "/deleteUserBank")
-    public ModelAndView deleteUserBank(List<Integer> ids) {
-        ModelAndView model = new ModelAndView();
-        if (userService.deleteUserBankById(ids)) {
-            
-        }
-    }*/
+    // 使用ajax请求 接受json对象
+    /*
+     * @RequestMapping(value = "/deleteUserBank") public ModelAndView
+     * deleteUserBank(List<Integer> ids) { ModelAndView model = new
+     * ModelAndView(); if (userService.deleteUserBankById(ids)) {
+     * 
+     * } }
+     */
 
-    // ecv 
-    
+    // ecv
+
     @RequestMapping(value = "/showAllEcvType")
     public ModelAndView showAllEcvType(EcvTypePagination ecvTypePagination) {
         ModelAndView model = new ModelAndView();
@@ -595,7 +626,7 @@ public class BusinessController {
         model.setViewName("/business/user/ecv/typeList");
         return model;
     }
-    
+
     @RequestMapping(value = "/goToModifyEcvType")
     public ModelAndView goToModifyEcvType(@RequestParam(value = "id", defaultValue = "-1") int id) {
         ModelAndView model = new ModelAndView();
@@ -609,7 +640,7 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/modifyEcvType")
     public ModelAndView modifyEcvType(EcvType ecvType, HttpSession session) {
         ModelAndView model = new ModelAndView();
@@ -622,12 +653,12 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/goToAddEcvType")
     public String goToAddEcvType() {
         return "/business/user/ecv/typeCreate";
     }
-    
+
     @RequestMapping(value = "/addEcvType")
     public ModelAndView addEcvType(EcvType ecvType, HttpSession session) {
         ModelAndView model = new ModelAndView();
@@ -640,10 +671,9 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/grantEcv")
-    public ModelAndView grantEcv(
-            @RequestParam(value = "ecvTypeId", defaultValue = "-1") int ecvTypeId,
+    public ModelAndView grantEcv(@RequestParam(value = "ecvTypeId", defaultValue = "-1") int ecvTypeId,
             @RequestParam(value = "ids", defaultValue = "") String ids,
             @RequestParam(value = "grantType", defaultValue = "0") int grantType,
             @RequestParam(value = "isCreatePassword", defaultValue = "false") boolean isCreatePassword,
@@ -658,7 +688,7 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/showAllEcv")
     public ModelAndView showAllEcv(EcvPagination ecvPagination) {
         ModelAndView model = new ModelAndView();
@@ -667,7 +697,7 @@ public class BusinessController {
         model.setViewName("/business/user/ecv/list");
         return model;
     }
-    
+
     @RequestMapping(value = "/showAllMsgSystem")
     public ModelAndView showAllMsgSystem(MsgSystemPagination msgSystemPagination) {
         ModelAndView model = new ModelAndView();
@@ -677,7 +707,7 @@ public class BusinessController {
         model.setViewName("/business/user/msg/systemList");
         return model;
     }
-    
+
     @RequestMapping(value = "/goToModifyMsgSystem")
     public ModelAndView goToModifyMsgSystem(@RequestParam(value = "id", defaultValue = "-1") int id) {
         ModelAndView model = new ModelAndView();
@@ -691,7 +721,7 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/modifyMsgSystem")
     public ModelAndView modifyMsgSystem(MsgSystem msgSystem, HttpSession session) {
         ModelAndView model = new ModelAndView();
@@ -704,12 +734,12 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/goToAddMsgSystem")
     public String goToAddMsgSystem() {
         return "/business/user/msg/systemCreate";
     }
-    
+
     @RequestMapping(value = "/addMsgSystem")
     public ModelAndView addMsgSystem(MsgSystem msgSystem, HttpSession session) {
         ModelAndView model = new ModelAndView();
@@ -722,7 +752,7 @@ public class BusinessController {
         }
         return model;
     }
-    
+
     @RequestMapping(value = "/systemSetUp")
     public ModelAndView systemSetUp(MAdvPagination mAdvPagination) {
         ModelAndView model = new ModelAndView();

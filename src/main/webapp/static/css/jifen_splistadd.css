@@ -233,7 +233,7 @@ a{
 }
 
 .xiala{
-	background: url('img1/03_02.png') center no-repeat;
+	background: url('../img/img1/03_02.png') center no-repeat;
 	width: 10px;
 	height: 6px;
 	position: absolute;

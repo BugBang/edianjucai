@@ -29,14 +29,28 @@ $(document).ready(function(){
 	})
 })
 
-function tiaozhuan(){
+function tiaozhuan(url){
 	var str = $("#page").val();  
+	var totalPage = $(".page_all span").text();
+	
+	if (parseint(str) <= 1) {
+		str = 1;
+	}
+	
+	if (parseint(str) >= parseint(totalPage)) {
+		str = totalPage;
+	}
 	if((/^(\+|-)?\d+$/.test(str)) && str > 0)	{
+		location.href = url + "?currentPage=" + str;
 		return true;
 	} else {
 		alert('请输入正确的数字');
 		return false;
 	}
+}
+
+function goToAddGoodsCate(url) {
+	window.location.href = url + "/Business/goToAddGoodsCate"
 }
 
 

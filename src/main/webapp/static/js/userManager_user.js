@@ -66,7 +66,7 @@ function tiaozhuan(url){
 }
 
 function goToAddUser(url) {
-	window.location.href = url + "/Business/goToAddUser"
+	window.location.href = url + "/Business/goToAddUser";
 }
 
 

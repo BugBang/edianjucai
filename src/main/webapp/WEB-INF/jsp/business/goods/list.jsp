@@ -62,13 +62,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="userManager_user.html">
+                    <a href="<%=url %>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
                 </li>
                 <li  class="bg">
-                    <a href="#">
+                    <a href="<%=url %>/Business/showAllGoods">
                         <img src="../static/img/img1/icon3.png">
                         <div>积分商城</div>
                     </a>
@@ -91,14 +91,14 @@
             <div class="arrow"></div>
             <div class="sign_all">
                 <ul class="sign_title">
-                    <li><a href="#" id="title_bg">商品列表</a></li>
-                    <li><a href="#">商品分类</a></li>
-                    <li style="border-right: none;"><a href="#">站内消息管理</a></li>
+                    <li><a href="<%=url%>/Business/showAllGoods" id="title_bg">商品列表</a></li>
+                    <li><a href="<%=url%>/Business/showAllGoodsCate">商品分类</a></li>
+                    <li style="border-right: none;"><a href="<%=url%>/Business/showAllGoodsOrder">站内消息管理</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>
             <div class="list_top">
-                <button class="btn btn1">新增</button>
+                <button class="btn btn1" onclick="goToAddGoods('<%=url%>')">新增</button>
                 <button class="btn btn2">删除</button>
             </div>
             <div class="list_con">
@@ -128,14 +128,24 @@
                 </table>
             </div>
             <div class="list_bottom">
-                <a href="#" class="a_0 a_1"></a>
-                <a href="#" class="a_0 a_2"></a>
-                <div class="page_1">第<input type="text" value="4" class="page_inp page_inp1">页</div>
-                <a href="#" class="a_0 a_3"></a>
-                <a href="#" class="a_0 a_4"></a>
-                <div class="page_all">共<span>20</span>页</div>
-                <div class="page_fo">到<input type="text" value="" class="page_f" id="page">页</div>
-                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan()">
+                <a href="<%=url%>/Business/showAllGoods?currentPage=1" class="a_0 a_1"></a>
+                <c:if test="${pagination.currentPage <= 1 }">
+                    <a href="<%=url%>/Business/showAllGoods?currentPage=1" class="a_0 a_2"></a>
+                </c:if>
+                <c:if test="${pagination.currentPage > 1 }">
+                    <a href="<%=url%>/Business/showAllGoods?currentPage=${(pagination.currentPage - 1)}" class="a_0 a_2"></a>
+                </c:if>
+                <div class="page_1">第<input type="text" value="${pagination.currentPage }" class="page_inp page_inp1">页</div>
+                <c:if test="${pagination.currentPage >= pagination.totalPage}">
+                    <a href="<%=url%>/Business/showAllGoods?currentPage=${(pagination.totalPage)}" class="a_0 a_3"></a>
+                </c:if>
+                <c:if test="${pagination.currentPage < pagination.totalPage}">
+                    <a href="<%=url%>/Business/showAllGoods?currentPage=${(pagination.currentPage + 1)}" class="a_0 a_3"></a>
+                </c:if>
+                <a href="<%=url%>/Business/showAllGoods?currentPage=${pagination.totalPage }" class="a_0 a_4"></a>
+                <div class="page_all">共<span>${pagination.totalPage }</span>页</div>
+                <div class="page_fo">到<input type="text" value="${pagination.currentPage }" class="page_f" id="page">页</div>
+                <input type="button" value="GO" class="page_inp" onclick="tiaozhuan('<%=url%>/Business/showAllGoods')"/>
             </div>
         </div>
         <div class="bottom"></div>
