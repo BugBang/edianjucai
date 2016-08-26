@@ -140,6 +140,7 @@ public class BusinessController {
         articlePagination.setCurrentPage(currentPage);
         List<Article> articles = articleService.findAllArticle(articlePagination);
         model.addObject("articles", articles);
+        model.addObject("pagination", articlePagination);
         model.setViewName("/business/article/list");
         return model;
     }
@@ -215,11 +216,11 @@ public class BusinessController {
     }
 
     @RequestMapping(value = "/showAllArticleCate")
-    public ModelAndView showAllArticleCate(
-            @ModelAttribute("articleCatePagination") ArticleCatePagination articleCatePagination) {
+    public ModelAndView showAllArticleCate(@ModelAttribute("articleCatePagination") ArticleCatePagination articleCatePagination) {
         ModelAndView model = new ModelAndView();
         List<ArticleCate> articleCates = articleService.findAllArticleCate(articleCatePagination);
         model.addObject("articleCates", articleCates);
+        model.addObject("pagination", articleCatePagination);
         model.setViewName("/business/article/cate/list");
         return model;
     }
@@ -274,6 +275,8 @@ public class BusinessController {
         return model;
     }
 
+    
+    
     @RequestMapping(value = "/showAllGoods")
     public ModelAndView showAllGoods(@ModelAttribute("goodsPagination") GoodsPagination goodsPagination) {
         ModelAndView model = new ModelAndView();
@@ -471,6 +474,7 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         List<Nav> navs = frontendService.findAllNav(navPagination);
         model.addObject("navs", navs);
+        model.addObject("pagination", navPagination);
         model.setViewName("/business/frontend/nav/list");
         return model;
     }
@@ -532,7 +536,9 @@ public class BusinessController {
         ModelAndView model = new ModelAndView();
         List<Adv> advs = frontendService.findAllAdv(advPagination);
         model.addObject("advs", advs);
+        model.addObject("pagination", advPagination);
         model.setViewName("/business/frontend/adv/list");
+        System.out.println("advs="+advs.size());
         return model;
     }
 

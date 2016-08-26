@@ -73,7 +73,7 @@ public class FrontendDao {
     public List<Adv> findAllAdv(AdvPagination advPagination) {
         String hql = XMLReaderUtil.getSql("adv");
         Query query = getSession().createQuery(hql);
-        query.setString("name", "%" + advPagination.getName() + "%");
+        query.setString("name", "%" + (advPagination.getName() != null ? advPagination.getName() : "") + "%");
         query.setFirstResult(advPagination.getStart());
         query.setMaxResults(advPagination.getPageSize());
         return query.list();
