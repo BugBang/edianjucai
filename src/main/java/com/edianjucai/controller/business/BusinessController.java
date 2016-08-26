@@ -421,8 +421,9 @@ public class BusinessController {
     public ModelAndView showAllGoodsOrder(GoodsOrderPagination goodsOrderPagination) {
         ModelAndView model = new ModelAndView();
         try {
-            List<GoodsOrder> goodsOrders = goodsService.findAllGoodsOrder(goodsOrderPagination);
+            List<GoodsOrderVo> goodsOrders = goodsService.findAllGoodsOrder(goodsOrderPagination);
             model.addObject("goodsOrders", goodsOrders);
+            model.addObject("pagination", goodsOrderPagination);
             model.setViewName("/business/goods/order/list");
         } catch (ParseException e) {
             e.printStackTrace();
@@ -439,7 +440,7 @@ public class BusinessController {
             goodsOrderVos = goodsService.findAllGoodsOrder();
             String[] excelHeader = { "编号#id", "订单号#orderSn", "商品名称#goodsName", "用户名#userName", "所需积分#score",
                     "兑换时间#exTime", "发货时间#deliveryTime", "订单状态#orderStatus", "是否配送#isDelivery" };
-            ExportExcelUtil.export(response, "Test", excelHeader, goodsOrderVos);
+            ExportExcelUtil.export(response, "Order_list", excelHeader, goodsOrderVos);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (Exception e) {

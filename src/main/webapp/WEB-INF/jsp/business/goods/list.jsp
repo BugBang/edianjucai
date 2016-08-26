@@ -56,19 +56,19 @@
         <div class="nav">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="showAllDeal">
                         <img src="../static/img/img1/icon1.png">
                         <div>贷款管理</div>
                     </a>
                 </li>
                 <li>
-                    <a href="<%=url %>/Business/index">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
                 </li>
-                <li  class="bg">
-                    <a href="<%=url %>/Business/showAllGoods">
+                <li class="bg">
+                    <a href="<%=url%>/Business/showAllGoods">
                         <img src="../static/img/img1/icon3.png">
                         <div>积分商城</div>
                     </a>
@@ -93,7 +93,7 @@
                 <ul class="sign_title">
                     <li><a href="<%=url%>/Business/showAllGoods" id="title_bg">商品列表</a></li>
                     <li><a href="<%=url%>/Business/showAllGoodsCate">商品分类</a></li>
-                    <li style="border-right: none;"><a href="<%=url%>/Business/showAllGoodsOrder">站内消息管理</a></li>
+                    <li style="border-right: none;"><a href="<%=url%>/Business/showAllGoodsOrder">兑换商品</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>

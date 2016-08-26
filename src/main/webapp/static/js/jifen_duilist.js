@@ -45,4 +45,8 @@ function tiaozhuan(){
 	}
 }
 
+function exportProject(url) {
+	window.location.href = url + "/Business/exportProject";
+}
+
 

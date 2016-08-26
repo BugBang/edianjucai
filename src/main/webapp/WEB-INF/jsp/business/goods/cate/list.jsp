@@ -56,19 +56,19 @@
         <div class="nav">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="showAllDeal">
                         <img src="../static/img/img1/icon1.png">
                         <div>贷款管理</div>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
                 </li>
-                <li  class="bg">
-                    <a href="#">
+                <li class="bg">
+                    <a href="<%=url%>/Business/showAllGoods">
                         <img src="../static/img/img1/icon3.png">
                         <div>积分商城</div>
                     </a>
@@ -93,7 +93,7 @@
                 <ul class="sign_title">
                     <li><a href="<%=url%>/Business/showAllGoods">商品列表</a></li>
                     <li id="title_bg"><a href="<%=url%>/Business/showAllGoodsCate">商品分类</a></li>
-                    <li style="border-right: none;"><a href="<%=url%>/Business/showAllGoodsOrder">站内消息管理</a></li>
+                    <li style="border-right: none;"><a href="<%=url%>/Business/showAllGoodsOrder">兑换商品</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>
@@ -122,7 +122,7 @@
                         </td>
                         <td>${goodsCate.sort }</td>
                         <td class="td_r">
-                            <a href="#">操作</a>
+                            <a href="<%=url%>/Business/goToModifyGoodsCate?id=${goodsCate.id}">操作</a>
                         </td>
                     </tr>
                     </c:forEach>

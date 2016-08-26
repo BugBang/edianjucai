@@ -114,11 +114,14 @@ public class GoodsServiceImpl {
     // goods order
 
     @Transactional
-    public List<GoodsOrder> findAllGoodsOrder(GoodsOrderPagination goodsOrderPagination) throws ParseException {
-        List<GoodsOrder> goodsOrders = null;
+    public List<GoodsOrderVo> findAllGoodsOrder(GoodsOrderPagination goodsOrderPagination) throws ParseException {
+        List<GoodsOrderVo> govos = new ArrayList<>();
         goodsOrderPagination.setTotalCount(goodsDao.getGoodsOrderCount(goodsOrderPagination));
-        goodsOrders = goodsDao.findAllGoodsOrder(goodsOrderPagination);
-        return goodsOrders;
+        List<GoodsOrder> gopos = goodsDao.findAllGoodsOrder(goodsOrderPagination);
+        for (GoodsOrder gopo : gopos) {
+            govos.add(poToVo(gopo));
+        }
+        return govos;
     }
 
     @Transactional

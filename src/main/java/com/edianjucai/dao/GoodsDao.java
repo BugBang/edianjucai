@@ -132,9 +132,9 @@ public class GoodsDao {
         String hql = XMLReaderUtil.getSql("goodsOrder");
         String beginTime = goodsOrderPagination.getBeginTime();
         String endTime = goodsOrderPagination.getEndTime();
-        if (beginTime != null && endTime != null && !beginTime.isEmpty() && !beginTime.isEmpty()) {
-            hql += " where exTime between " + DateFormatUtils.StringToDate(beginTime, "yyyy-MM-dd").getTime() / 1000 + " and "
-                    + DateFormatUtils.StringToDate(endTime, "yyyy-MM-dd").getTime() / 1000;
+        if (beginTime != null && endTime != null && !beginTime.isEmpty() && !endTime.isEmpty()) {
+            hql += " where ex_time between " + DateFormatUtils.StringToDate(beginTime, "MM/dd/yyyy").getTime() / 1000 + " and "
+                    + DateFormatUtils.StringToDate(endTime, "MM/dd/yyyy").getTime() / 1000;
         }
 
         Query query = getSession().createQuery(hql);
@@ -155,8 +155,8 @@ public class GoodsDao {
         String beginTime = goodsOrderPagination.getBeginTime();
         String endTime = goodsOrderPagination.getEndTime();
         if (beginTime != null && endTime != null && !beginTime.isEmpty() && !endTime.isEmpty()) {
-            sql += " where ex_time >=" + DateFormatUtils.StringToDate(beginTime, "yyyy-MM-dd").getTime() / 1000 + " and ex_time <="
-                    + DateFormatUtils.StringToDate(endTime, "yyyy-MM-dd").getTime() / 1000;
+            sql += " where ex_time >=" + DateFormatUtils.StringToDate(beginTime, "MM/dd/yyyy").getTime() / 1000 + " and ex_time <="
+                    + DateFormatUtils.StringToDate(endTime, "MM/dd/yyyy").getTime() / 1000;
         }
         String countStr = getSession().createSQLQuery(sql).uniqueResult().toString();
         return Integer.valueOf(countStr);

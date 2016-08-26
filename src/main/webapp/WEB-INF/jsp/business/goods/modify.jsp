@@ -101,19 +101,19 @@
         <div class="nav">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="showAllDeal">
                         <img src="../static/img/img1/icon1.png">
                         <div>贷款管理</div>
                     </a>
                 </li>
                 <li>
-                    <a href="userManager_user.html">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
                 </li>
                 <li class="bg">
-                    <a href="#">
+                    <a href="<%=url%>/Business/showAllGoods">
                         <img src="../static/img/img1/icon3.png">
                         <div>积分商城</div>
                     </a>

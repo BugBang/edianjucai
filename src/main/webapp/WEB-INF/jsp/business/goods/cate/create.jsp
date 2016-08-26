@@ -78,19 +78,19 @@
         <div class="nav">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="showAllDeal">
                         <img src="../static/img/img1/icon1.png">
                         <div>贷款管理</div>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="<%=url%>/Business/index">
                         <img src="../static/img/img1/icon2.png">
                         <div>会员管理</div>
                     </a>
                 </li>
                 <li class="bg">
-                    <a href="#">
+                    <a href="<%=url%>/Business/showAllGoods">
                         <img src="../static/img/img1/icon3.png">
                         <div>积分商城</div>
                     </a>
@@ -113,8 +113,8 @@
             <div class="arrow"></div>
             <div class="sign_all">
                 <ul class="sign_title">
-                    <li><a href="<%=url %>/Business/showAllGoods" id="title_bg">商品列表</a></li>
-                    <li><a href="<%=url %>/Business/showAllGoodsCate">商品分类</a></li>
+                    <li><a href="<%=url %>/Business/showAllGoods">商品列表</a></li>
+                    <li><a href="<%=url %>/Business/showAllGoodsCate" id="title_bg">商品分类</a></li>
                     <li style="border-right: none;"><a href="<%=url %>/Business/showAllGoodsOrder">兑换商品</a></li>
                     <div class="clear"></div>
                 </ul>
@@ -140,10 +140,7 @@
                 </div>
                 <div class="box box2">状态 :
                     <input type="hidden" class="hiddenInput" name="isEffect" value="${goodsCate.isEffect }" />
-                    <input type="text" value="
-                    <c:if test="${goodsCate.isEffect == 1}">有效</c:if>
-                    <c:if test="${goodsCate.isEffect == 0}">无效</c:if>
-                    " dir="rtl" class="input input5 input_drop" readonly="readonly">
+                    <input type="text" value="${goodsCate.isEffect == 1 ? '有效' : '无效'}" dir="rtl" class="input input5 input_drop" readonly="readonly">
                     <button class="xiala"></button>
                     <ul class="drop_1 drop">
                         <li value="1">有效</li>
