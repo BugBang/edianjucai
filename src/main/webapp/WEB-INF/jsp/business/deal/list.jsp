@@ -76,13 +76,13 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="<%=url%>/Business/showAllGoods">
 						<img src="../static/img/img1/icon3.png">
 						<div>积分商城</div>
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="<%=url%>/Business/showAllArticle">
 						<img src="../static/img/img1/icon4.png">
 						<div>前端管理</div>
 					</a>

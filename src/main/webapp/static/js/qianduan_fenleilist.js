@@ -27,14 +27,30 @@ $(document).ready(function(){
 	})
 })
 
-function tiaozhuan(){
-	var str = $("#page").val();  
+function tiaozhuan(url){
+	var str = $("#page").val();
+	var totalPage = $(".page_all span").text();
+	
+	if (parseInt(str) <= 1) {
+		str = 1;
+	}
+	
+	if (parseInt(str) >= parseInt(totalPage)) {
+		str = totalPage;
+	}
+	
 	if((/^(\+|-)?\d+$/.test(str)) && str > 0)	{
+		location.href = url + "?currentPage=" + str + "&title=" + $("#title").val();
 		return true;
 	} else {
 		alert('请输入正确的数字');
 		return false;
 	}
 }
+
+function addArticle(url){
+	window.location.href = url + "/Business/goToAddArticle";
+}
+
 
 

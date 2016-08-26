@@ -57,7 +57,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="<%=url%>/Business/showAllArticle">
                         <img src="../static/img/img1/icon4.png">
                         <div>前端管理</div>
                     </a>

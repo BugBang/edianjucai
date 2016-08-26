@@ -34,6 +34,7 @@
  	<script src="../static/js/jquery-ui.js"></script>
  	<script type="text/javascript" src="../static/js/qianyue_daikuan.js"></script>
 </head>
+<% String url = request.getContextPath(); %>
 <body>
 	<div class="sheet">
 		<div class="head">  
@@ -70,25 +71,25 @@
 				<li>
 					<a href="/edianjucai/Business/index">
 						<img src="../static/img/img1/icon2.png">
-						<div>签约管理</div>
+						<div>会员管理/div>
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="<%=url%>/Business/showAllGoods">
 						<img src="../static/img/img1/icon3.png">
-						<div>贷后管理</div>
+						<div>积分商城</div>
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="<%=url%>/Business/showAllArticle">
 						<img src="../static/img/img1/icon4.png">
-						<div>部门管理</div>
+						<div>前端管理</div>
 					</a>
 				</li>
 				<li>
 					<a href="#">
 						<img src="../static/img/img1/icon5.png">
-						<div>人员信息</div>
+						<div>系统设置</div>
 					</a>
 				</li>
 			</ul>
